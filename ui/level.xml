@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<Level id="'level'" w="480" h="640" layout:Row-rows="[50,-1]">
+
+    <!-- header -->
+    <Widget skin:Paint-border="4">
+    </Widget>
+
+    <Widget skin:Paint-border="4">
+        <!-- game field -->
+        <Widget
+            name   = "'field'"
+            w      = "$Main.cfg.cols * $Main.cfg.block.size"
+            h      = "$Main.cfg.rows * $Main.cfg.block.size"
+            left   = "10"
+            bottom = "10"
+            skin:Paint-border="1"
+        >
+            <Project name="'project'">
+                <Widget
+                    name = "'selector'"
+                    w    = "$Main.cfg.cols * $Main.cfg.block.size"
+                    h    = "$Main.cfg.block.size"
+                    skin:Paint-border = "2"
+                    skin:Paint-borderColor = "0x00FF00"
+                />
+            </Project>
+        </Widget>
+
+        <!-- features -->
+        <Widget w="100" h="200" right="10" top="20" skin:Paint-border="1">
+            <Text widthPt="100" align="'center,middle'" text="'Next feature'"/>
+        </Widget>
+
+    </Widget>
+
+</Level>

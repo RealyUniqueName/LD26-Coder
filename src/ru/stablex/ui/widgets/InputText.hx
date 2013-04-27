@@ -1,0 +1,59 @@
+package ru.stablex.ui.widgets;
+
+#if html5
+import nme.events.Event;
+#end
+
+
+
+/**
+* Text with type = <type>nme.text.TextFieldType</type>.INPUT
+*/
+class InputText extends Text{
+
+    /**
+    * Constructor
+    *
+    */
+    public function new () : Void {
+        super();
+
+        #if !html5
+            this.label.type = nme.text.TextFieldType.INPUT;
+        #else
+            //due to strange bug we need this hack
+            this.addEventListener(Event.ADDED_TO_STAGE, function(e:Event){
+                this.label.type = browser.text.TextFieldType.INPUT;
+            });
+        #end
+
+        this.label.autoSize = nme.text.TextFieldAutoSize.NONE;
+        this.format.align   = nme.text.TextFormatAlign.LEFT;
+    }//function new()
+
+
+    /**
+    * update textField size on refresh
+    *
+    */
+    override public function refresh () : Void {
+        this.label.width  = this.w - this.paddingLeft - this.paddingRight;
+        this.label.height = this.h - this.paddingTop - this.paddingBottom;
+
+        super.refresh();
+    }//function refresh()
+
+#if html5
+    /**
+    * Text getter
+    * we need this hack to get actual text of textfield
+    */
+    override private function get_text() : String {
+        return (
+            this.label.type == nme.text.TextFieldType.INPUT
+                ? StringTools.replace( Reflect.field(this.label, 'nmeGraphics').nmeSurface.innerHTML, '&nbsp;', ' ' )
+                : this.label.text
+        );
+    }//function get_text()
+#end
+}//class InputText
