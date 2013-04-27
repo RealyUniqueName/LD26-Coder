@@ -4,6 +4,7 @@ import motion.Actuate;
 import ru.stablex.Err;
 import ru.stablex.ui.UIBuilder;
 import ru.stablex.ui.widgets.Widget;
+import motion.actuators.GenericActuator;
 
 
 /**
@@ -26,6 +27,8 @@ class Feature extends Widget{
     public var level (get_level,never) : Level;
     //if this feature was dropped
     public var dropped : Bool = false;
+    //timer for movement steps
+    public var actuateTimer : IGenericActuator;
 
 /*******************************************************************************
 *       STATIC METHODS
@@ -194,7 +197,7 @@ class Feature extends Widget{
     *
     */
     public function step () : Void {
-        Actuate.timer(Level.speed).onComplete(this.performStep);
+        this.actuateTimer = Actuate.timer(Level.speed).onComplete(this.performStep);
     }//function step()
 
 

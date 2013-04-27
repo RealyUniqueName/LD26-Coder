@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<Level id="'level'" w="480" h="640" layout:Row-rows="[50,-1]">
+<Level id="'level'" name="'level'" w="480" h="640" layout:Row-rows="[50,-1]">
 
     <!-- header -->
     <Widget>

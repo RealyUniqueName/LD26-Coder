@@ -36,6 +36,10 @@ class Level extends Widget{
     public var featuresLeftLabel : Text;
     //level config
     public var cfg : TLevelCfg;
+    //level number
+    public var num : Int = -1;
+    //level stopped (voctory/gameover)
+    public var stopped : Bool = false;
 
 /*******************************************************************************
 *       STATIC METHODS
@@ -66,8 +70,9 @@ class Level extends Widget{
     * Load level config
     *
     */
-    public function load (cfg:TLevelCfg) : Void {
+    public function load (cfg:TLevelCfg, num:Int = -1) : Void {
         this.cfg = cfg;
+        this.num = num;
 
         this.deadline.value = this.deadline.max = this.cfg.deadline;
         this.featuresLeft   = this.cfg.features;
@@ -96,6 +101,7 @@ class Level extends Widget{
     *
     */
     public function pause () : Void {
+        this.stopped = true;
         Actuate.pauseAll();
     }//function pause()
 
@@ -105,6 +111,7 @@ class Level extends Widget{
     *
     */
     public function resume () : Void {
+        this.stopped = false;
         Actuate.resumeAll();
     }//function resume()
 
@@ -114,6 +121,7 @@ class Level extends Widget{
     *
     */
     public function nextFeature () : Void {
+        if( this.stopped ) return;
         if( this.featuresLeft < 0 ){
             this.victory();
             return;
@@ -155,7 +163,11 @@ class Level extends Widget{
     *
     */
     public function dropFeature () : Void {
-        if( this.current.dropped || this.current.row <= 0 ) return;
+        if( this.current.dropped /* || this.current.row <= 0 */) return;
+        if( this.current.actuateTimer != null ){
+            Actuate.stop(this.current.actuateTimer, null, false, false);
+            this.current.actuateTimer = null;
+        }
 
         this.current.dropped = true;
         while( this.current.canMove() ){
@@ -189,7 +201,9 @@ class Level extends Widget{
     *
     */
     public function gameOver () : Void {
-        trace("game over");
+        this.stopped = true;
+        this.deadline.tweenStop();
+        UIBuilder.buildFn("ui/popup/gameOver.xml")().show();
     }//function gameOver()
 
 
@@ -198,7 +212,9 @@ class Level extends Widget{
     *
     */
     public function victory () : Void {
-        trace("victory");
+        this.stopped = true;
+        this.deadline.tweenStop();
+        UIBuilder.buildFn("ui/popup/victory.xml")().show();
     }//function victory()
 
 
@@ -212,6 +228,7 @@ class Level extends Widget{
         return;
         this.current.rotate(left);
     }//function rotateFeature()
+
 
 /*******************************************************************************
 *       GETTERS / SETTERS

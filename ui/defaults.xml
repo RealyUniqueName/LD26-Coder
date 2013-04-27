@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<Defaults>
+    <Button>
+        <Default
+            padding            = "5"
+            label-selectable   = "false"
+            label-mouseEnabled = "false"
+            label-autoSize     = "nme.text.TextFieldAutoSize.LEFT"
+            format-bold        = "true"
+            format-size        = "20"
+            skin:Paint-color   = "0xAAAAAA"
+        />
+        <mainMenu
+            w="280"
+            h="80"
+            format-size = "40"
+        />
+    </Button>
+
+    <Popup>
+        <Default
+            widthPt  = "100"
+            heightPt = "100"
+            skin:Paint-color = "0x000000"
+            skin:Paint-alpha = "0.01"
+        />
+    </Popup>
+
+    <VBox>
+        <popup
+            padding      = "10"
+            childPadding = "10"
+            skin:Paint-color  = "0xDDDDDD"
+            skin:Paint-border = "4"
+            skin:Paint-borderColor = "0x999999"
+        />
+    </VBox>
+
+</Defaults>

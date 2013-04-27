@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<Popup name="'popup'">
+    <VBox defaults="'popup'">
+        <Text text="'Continue saved game?'"/>
+        <Button text="'New game'" on-click="
+            $this.getParentAs('popup', $Popup).close();
+            Main.playStory(true);
+        "/>
+        <Button text="'Continue'" on-click="
+            $this.getParentAs('popup', $Popup).close();
+            Main.playStory(true);
+        "/>
+    </VBox>
+</Popup>

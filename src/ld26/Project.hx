@@ -162,6 +162,8 @@ class Project extends Widget{
     *
     */
     private function _onKeyDown (e:KeyboardEvent) : Void {
+        if( this.level.stopped ) return;
+
         //move selector up
         if( e.keyCode == Keyboard.UP && this.selectedRow > 0 ){
             this.selectedRow --;

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<Widget id="'root'" w="480" h="640">
+    <ViewStack name="'vs'" widthPt="100" heightPt="100" trans:Slide-duration="0.5">
+
+        <!-- main menu -->
+        <VBox name="'menu'" childPadding="50" widthPt="100" heightPt="100">
+            <Text format-size="80" text="'Coder'"/>
+            <Button text="'Story'" defaults="'Default,mainMenu'" on-click="$Main.playStory();"/>
+            <Button text="'Endless'" defaults="'Default,mainMenu'" on-click="$Main.playEndless();"/>
+        </VBox>
+
+    </ViewStack>
+</Widget>

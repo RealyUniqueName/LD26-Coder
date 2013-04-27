@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<Popup name="'popup'">
+    <VBox defaults="'popup'">
+        <Text text="'Victory!'"/>
+        <Button text="'Next'" on-click="
+            $this.getParentAs('popup', $Popup).close();
+            $Main.playLevel(#Level(level).num + 1);
+        "/>
+    </VBox>
+</Popup>

@@ -52,7 +52,7 @@ class Block extends Bmp {
         var p : Point = this.localToGlobal(new Point(0, 0));
         this.left = p.x;
         this.top  = p.y;
-        Lib.current.addChild(this);
+        Main.root.addChild(this);
 
         this.filters = [new nme.filters.DropShadowFilter(6)];
 
