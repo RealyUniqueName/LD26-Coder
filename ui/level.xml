@@ -4,8 +4,13 @@
 <Level id="'level'" w="480" h="640" layout:Row-rows="[50,-1]">
 
     <!-- header -->
-    <Widget skin:Paint-border="4">
+    <Widget>
+        <!-- deadline bar -->
+        <Progress name="'deadline'" bottom="0" widthPt="100" h="20" max="640" value="640" skin:Paint-border="4" skin:Paint-borderColor="0xFF0000" bar-skin:Paint-color="0x00FF00">
+            <Text text="'Deadline'" right="10"/>
+        </Progress>
     </Widget>
+
 
     <Widget skin:Paint-border="4">
         <!-- game field -->
@@ -32,9 +37,13 @@
         </Widget>
 
         <!-- features -->
-        <Widget w="100" h="200" right="10" top="20" skin:Paint-border="1" layout:Row-rows="[20,-1]">
+        <Widget w="100" h="200" right="10" top="20" skin:Paint-border="1" layout:Row-rows="[20,-1,20]">
             <Text align="'center,middle'" text="'Next feature'"/>
             <VBox name="'displayNext'" />
+            <HBox>
+                <Text text="'Features left:'"/>
+                <Text name="'featuresLeft'" text="'0'"/>
+            </HBox>
         </Widget>
 
     </Widget>

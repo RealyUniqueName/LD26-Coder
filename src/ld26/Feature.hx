@@ -37,9 +37,9 @@ class Feature extends Widget{
     * @param max - maximum feature size (cols and rows)
     *
     */
-    static public function rnd (max:Int) : Feature {
-        var rows = Std.random(max) + 1;
-        var cols = Std.random(max) + 1;
+    static public function rnd (max:Int = 3, min:Int = 2) : Feature {
+        var rows = Std.random(max - min + 1) + min;
+        var cols = Std.random(max - min + 1) + min;
 
         //generate blocks
         var blocks : Array<Array<Int>> = [];
@@ -83,12 +83,49 @@ class Feature extends Widget{
             }
         //}
 
+        //to make it rotatable
+        if( rows > cols ){
+            for(c in cols...rows){
+                blocks.push([]);
+                for(r in 0...rows){
+                    blocks[c].push(0);
+                }
+            }
+        }else if( cols > rows ){
+            for(c in 0...cols){
+                for(r in rows...cols){
+                    blocks[c].push(0);
+                }
+            }
+        }
+
+        //create feature
         var f : Feature = UIBuilder.create(Feature, {
             blocks : blocks
         });
 
         return f;
     }//function rnd()
+
+
+    /**
+    * Rotate array clockwise
+    *
+    */
+    static public function rotateArray<T> (arr:Array<Array<T>>) : Array<Array<T>> {
+        var tmp  : Array<Array<T>> = [];
+        for(c in 0...arr.length){
+            tmp.push([]);
+        }
+
+        for(c in 0...arr.length){
+            for(r in 0...arr.length){
+                tmp[arr.length - r - 1][c] = arr[c][r];
+            }
+        }
+
+        return tmp;
+    }//function rotateArray<T>()
 
 /*******************************************************************************
 *       INSTANCE METHODS
@@ -157,7 +194,7 @@ class Feature extends Widget{
     *
     */
     public function step () : Void {
-        Actuate.timer(Main.cfg.speed).onComplete(this.performStep);
+        Actuate.timer(Level.speed).onComplete(this.performStep);
     }//function step()
 
 
@@ -173,7 +210,7 @@ class Feature extends Widget{
         //go
         }else{
             this.row ++;
-            this.tween(Main.cfg.speed,{
+            this.tween(Level.speed,{
                 top : this.row * Main.cfg.block.size
             }, "Quad.easeOut").onComplete(this._finishStep);
         }
@@ -219,6 +256,66 @@ class Feature extends Widget{
     }//function canMove()
 
 
+    /**
+    * Rotate this feature left
+    *
+    */
+    public function rotate (left:Bool) : Void {
+        var tmp : Array<Array<Int>> = [];
+        for(c in 0...this.cols){
+            tmp.push([]);
+        }
+
+        for(c in 0...this.cols){
+            for(r in 0...this.rows){
+                if( left ){
+                    tmp[r][this.cols - c - 1] = this.blocks[c][r];
+                }else{
+                    tmp[this.cols - r - 1][c] = this.blocks[c][r];
+                }
+            }
+        }
+
+        //check for collisions{
+            var level = this.level;
+            for(c in 0...this.cols){
+                for(r in 0...this.rows){
+                    if( level.project.blocks[this.col + c][this.row + r] != null && tmp[c][r] > 0 ){
+                        return;
+                    }
+                }
+            }
+        //}
+
+        this.blocks = tmp;
+
+        //animate rotation
+        var b : Block;
+        for(c in 0...this.cols){
+            for(r in 0...this.rows){
+                b = this._blocks[c][r];
+                if( left ){
+                    if( b != null ) b.moveTo(r, this.cols - c - 1);
+                }else{
+                    if( b != null ) b.moveTo(this.cols - r - 1, c);
+                }
+            }//for(rows)
+        }//for(cols)
+
+        // //fix this._blocks {
+        //     var tmp : Array<Array<Block>> = ;
+        //     for(c in 0...this.cols){
+        //         for(r in 0...this.rows){
+        //             tmp = this._blocks[c][r];
+        //             this._blocks[c][r]                 = this._blocks[this.cols - r - 1][c];
+        //             this._blocks[this.cols - r - 1][c] = this._blocks[this.cols - c - 1][this.cols - r - 1];
+        //             this._blocks[r][this.cols - c - 1] = tmp;
+        //         }
+        //     }
+        // //}
+    }//function rotateLeft()
+
+
 /*******************************************************************************
 *       GETTERS / SETTERS
 *******************************************************************************/
@@ -255,10 +352,16 @@ class Feature extends Widget{
     *
     */
     private inline function set_blocks (blocks:Array<Array<Int>>) : Array<Array<Int>> {
+        //rotate structure
+        for(i in 0...Std.random(4)){
+            blocks = Feature.rotateArray(blocks);
+        }
+
         this.resize(
             (blocks.length == 0 ? 0 : blocks.length * Main.cfg.block.size),
             (blocks.length == 0 || blocks[0].length == 0 ? 0 : blocks[0].length * Main.cfg.block.size)
         );
         return this.blocks = blocks;
     }//function set_blocks
+
 }//class Feature

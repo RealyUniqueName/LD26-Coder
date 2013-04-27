@@ -13,6 +13,10 @@ class Main{
 
     //game config
     static public var cfg : TCfg;
+    //levels config
+    static public var levels : Array<TLevelCfg>;
+    //predefined structures for features
+    static public var structs : Array<Array<Array<Int>>>;
 
 /*******************************************************************************
 *       STATIC METHODS
@@ -23,7 +27,9 @@ class Main{
     *
     */
     static public function main () : Void {
-        Main.cfg = Assets.embed("assets/cfg.hx");
+        Main.cfg     = Assets.embed("assets/cfg.hx");
+        Main.levels  = Assets.embed("assets/levels.hx");
+        Main.structs = Assets.embed("assets/features.hx");
 
         UIBuilder.regClass("ld26.Main");
         UIBuilder.regClass("ld26.Project");
@@ -33,8 +39,8 @@ class Main{
 
         var level : Level = UIBuilder.buildFn("ui/level.xml")();
         Lib.current.addChild(level);
-
-        level.load(null);
+trace(Main.levels[0]);
+        level.load(Main.levels[0]);
         level.start();
     }//function main()
 

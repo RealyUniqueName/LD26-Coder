@@ -2,6 +2,9 @@ package ld26;
 
 import haxe.Timer;
 import motion.Actuate;
+import ru.stablex.ui.UIBuilder;
+import ru.stablex.ui.widgets.Progress;
+import ru.stablex.ui.widgets.Text;
 import ru.stablex.ui.widgets.Widget;
 
 
@@ -11,6 +14,8 @@ import ru.stablex.ui.widgets.Widget;
 *
 */
 class Level extends Widget{
+    //Duration of one step of moving feature
+    static public var speed : Float = 1;
 
     //game field
     public var field : Widget;
@@ -24,6 +29,13 @@ class Level extends Widget{
     public var displayNext : Widget;
     //player's project
     public var project : Project;
+    //deadline bar
+    public var deadline : Progress;
+    //indicator for amount of features left to implement
+    public var featuresLeft (default,set_featuresLeft) : Int = 0;
+    public var featuresLeftLabel : Text;
+    //level config
+    public var cfg : TLevelCfg;
 
 /*******************************************************************************
 *       STATIC METHODS
@@ -41,9 +53,12 @@ class Level extends Widget{
     */
     override public function onCreate () : Void {
         super.onCreate();
-        this.field       = this.getChild("field");
-        this.project     = this.field.getChildAs("project", Project);
-        this.displayNext = this.getChild("displayNext");
+
+        this.field             = this.getChild("field");
+        this.project           = this.field.getChildAs("project", Project);
+        this.displayNext       = this.getChild("displayNext");
+        this.deadline          = this.getChildAs("deadline", Progress);
+        this.featuresLeftLabel = this.getChildAs("featuresLeft", Text);
     }//function onCreate()
 
 
@@ -51,8 +66,14 @@ class Level extends Widget{
     * Load level config
     *
     */
-    public function load (data:TLevelCfg = null) : Void {
-        this.project.load( Project.rnd(3) );
+    public function load (cfg:TLevelCfg) : Void {
+        this.cfg = cfg;
+
+        this.deadline.value = this.deadline.max = this.cfg.deadline;
+        this.featuresLeft   = this.cfg.features;
+        Level.speed         = Main.cfg.speed * this.cfg.speed;
+
+        this.project.load( Project.rnd(this.cfg.complexity) );
     }//function load()
 
 
@@ -61,9 +82,12 @@ class Level extends Widget{
     *
     */
     public function start () : Void {
-        this.next = Feature.rnd(3);
+        this.next = this._getNextFeature();
         //drop first feature
         this.nextFeature();
+
+        //start deadline timer
+        this.deadline.tween(this.cfg.deadline, {value:0}).onComplete(this.gameOver);
     }//function start()
 
 
@@ -90,15 +114,40 @@ class Level extends Widget{
     *
     */
     public function nextFeature () : Void {
+        if( this.featuresLeft < 0 ){
+            this.victory();
+            return;
+        }
+        this.featuresLeft --;
+
         this.current = this.next;
-        this.next    = Feature.rnd(3);
+
+        //Feature.rnd(3);
         this.field.addChild(this.current);
-        this.displayNext.addChild(this.next);
+        if( this.featuresLeft > 0 ){
+            this.next    = this._getNextFeature();
+            this.displayNext.addChild(this.next);
+        }
 
         this.current.top  = 0;
         this.current.left = this.current.col * Main.cfg.block.size;
         this.current.step();
     }//function nextFeature()
+
+
+    /**
+    * Generate next feature according to complexity level
+    *
+    */
+    private function _getNextFeature () : Feature {
+        return UIBuilder.create(Feature, {
+            blocks : Main.structs[Std.random(
+                this.cfg.complexity < 8
+                    ? 8
+                    : (this.cfg.complexity <= Main.structs.length ? this.cfg.complexity : Main.structs.length)
+            )]
+        });
+    }//function _getNextFeature()
 
 
     /**
@@ -140,8 +189,17 @@ class Level extends Widget{
     *
     */
     public function gameOver () : Void {
-        //code...
+        trace("game over");
     }//function gameOver()
+
+
+    /**
+    * Victory!
+    *
+    */
+    public function victory () : Void {
+        trace("victory");
+    }//function victory()
 
 
     /**
@@ -149,12 +207,25 @@ class Level extends Widget{
     * @param left - rotate left(true) or right(false)
     *
     */
-    public function rotateFeature (left:Bool = true) : Void {
-        //code...
+    public function rotateFeature (left:Bool) : Void {
+        //rotating is disabled
+        return;
+        this.current.rotate(left);
     }//function rotateFeature()
 
 /*******************************************************************************
 *       GETTERS / SETTERS
 *******************************************************************************/
+
+    /**
+    * Setter `featuresLeft`.
+    *
+    */
+    private inline function set_featuresLeft (featuresLeft:Int) : Int {
+        if( this.featuresLeftLabel != null ){
+            this.featuresLeftLabel.text = Std.string(this.featuresLeft);
+        }
+        return this.featuresLeft = featuresLeft;
+    }//function set_featuresLeft
 
 }//class Level

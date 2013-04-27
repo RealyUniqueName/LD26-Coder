@@ -183,6 +183,14 @@ class Project extends Widget{
         //drop feature
         }else if( e.keyCode == Keyboard.SPACE ){
             this.level.dropFeature();
+
+        //rotate left
+        }else if( e.keyCode == Keyboard.V ){
+            this.level.rotateFeature(true);
+
+        //rotate right
+        }else if( e.keyCode == Keyboard.B ){
+            this.level.rotateFeature(false);
         }
     }//function _onKeyDown()
 
@@ -306,7 +314,7 @@ class Project extends Widget{
                 moveBy ++;
                 for(c in 0...Main.cfg.cols){
                     if( this.blocks[c][r] != null ){
-                        this.blocks[c][r].free();
+                        this.blocks[c][r].refactored();
                     }
                 }
             //move this row
@@ -315,7 +323,7 @@ class Project extends Widget{
                     this.blocks[c][r + moveBy] = this.blocks[c][r];
                     if( this.blocks[c][r] != null ){
                         this.blocks[c][r].row += moveBy;
-                        this.blocks[c][r].tween(Main.cfg.speed, {
+                        this.blocks[c][r].tween(Level.speed, {
                             top : this.blocks[c][r].row * Main.cfg.block.size
                         }, "Quad.easeOut");
                     }

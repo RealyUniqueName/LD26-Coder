@@ -1,5 +1,7 @@
 package ld26;
 
+import nme.geom.Point;
+import nme.Lib;
 import ru.stablex.ui.UIBuilder;
 import ru.stablex.ui.widgets.Bmp;
 
@@ -40,6 +42,48 @@ class Block extends Bmp {
             row  : this.row
         });
     }//function clone()
+
+
+    /**
+    * Animate refactoring
+    *
+    */
+    public function refactored () : Void {
+        var p : Point = this.localToGlobal(new Point(0, 0));
+        this.left = p.x;
+        this.top  = p.y;
+        Lib.current.addChild(this);
+
+        this.filters = [new nme.filters.DropShadowFilter(6)];
+
+        var destY    : Float = Lib.current.stage.stageHeight + this.h * 2;
+        var distance : Float = destY - this.y;
+        var duration : Float = distance / 200;
+
+        this.tween(duration, {
+            x        : p.x - 10 + 20 * Math.random(),
+            rotation : -10 + 20 * Math.random()
+        }, "Quad.easeOut");
+
+        this.tween(duration, {
+            y : destY
+        }, "Back.easeIn").onComplete(this.free, [true]);
+    }//function refactored()
+
+
+    /**
+    * Tween this block to specified position
+    *
+    */
+    public function moveTo (col:Int, row:Int) : Void {
+        this.col = col;
+        this.row = row;
+        this.tween(0.1,{
+            left : this.col * Main.cfg.block.size,
+            top  : this.row * Main.cfg.block.size,
+        }, "Quad.easeOut");
+    }//function moveTo()
+
 
 /*******************************************************************************
 *       GETTERS / SETTERS
