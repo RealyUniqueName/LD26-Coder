@@ -1,5 +1,6 @@
 package ld26;
 
+import ru.stablex.ui.UIBuilder;
 import ru.stablex.ui.widgets.Bmp;
 
 
@@ -26,6 +27,19 @@ class Block extends Bmp {
 *       INSTANCE METHODS
 *******************************************************************************/
 
+    /**
+    * Create the same block
+    *
+    */
+    public inline function clone () : Block {
+        return UIBuilder.create(Block, {
+            src  : this.src,
+            left : this.left,
+            top  : this.top,
+            col  : this.col,
+            row  : this.row
+        });
+    }//function clone()
 
 /*******************************************************************************
 *       GETTERS / SETTERS
@@ -56,5 +70,7 @@ class Block extends Bmp {
                 : this.row //project positions match game field positions
         );
     }//function get_absRow
+
+
 
 }//class Block

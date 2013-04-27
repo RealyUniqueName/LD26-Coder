@@ -1,7 +1,7 @@
 { //see ld26.TCfg for description
     cols  : 11,
     rows  : 18,
-    speed : 0.1,
+    speed : 0.5,
     block : {
         size  : 32,
         types : [

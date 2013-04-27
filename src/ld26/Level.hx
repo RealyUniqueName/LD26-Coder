@@ -16,6 +16,8 @@ class Level extends Widget{
     public var field : Widget;
     //features to implement
     public var features : Array<Feature>;
+    //current feature
+    public var current : Feature;
     //player's project
     public var project : Project;
 
@@ -46,7 +48,7 @@ class Level extends Widget{
     *
     */
     public function load (data:TLevelCfg = null) : Void {
-
+        this.project.load( Project.rnd(1) );
     }//function load()
 
 
@@ -79,15 +81,30 @@ class Level extends Widget{
 
 
     /**
-    * Drop next feature
+    * Create next feature
     *
     */
     public function nextFeature () : Void {
-        var f = Feature.rnd();
-        this.field.addChild(f);
-
-        f.step();
+        this.current = Feature.rnd();
+        this.field.addChild(this.current);
+        this.current.step();
     }//function nextFeature()
+
+
+    /**
+    * Drop current feature
+    *
+    */
+    public function dropFeature () : Void {
+        if( this.current.dropped || this.current.row <= 0 ) return;
+
+        this.current.dropped = true;
+        while( this.current.canMove() ){
+            this.current.row ++;
+        }
+        this.current.row --;
+        this.current.performStep();
+    }//function dropFeature()
 
 
     /**
@@ -95,9 +112,25 @@ class Level extends Widget{
     *
     */
     public function featureStopped (f:Feature) : Void {
-        this.project.addFeature(f);
-        this.nextFeature();
+        //game over
+        if( f.row <= 0 ){
+            this.gameOver();
+        //next feature
+        }else{
+            this.project.addFeature(f);
+            this.nextFeature();
+            f.free();
+        }
     }//function featureStopped()
+
+
+    /**
+    * Game over
+    *
+    */
+    public function gameOver () : Void {
+        //code...
+    }//function gameOver()
 
 /*******************************************************************************
 *       GETTERS / SETTERS

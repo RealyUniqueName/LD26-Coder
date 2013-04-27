@@ -24,6 +24,8 @@ class Feature extends Widget{
     public var row : Int = 0;
     //access currnet level instance
     public var level (get_level,never) : Level;
+    //if this feature was dropped
+    public var dropped : Bool = false;
 
 /*******************************************************************************
 *       STATIC METHODS
@@ -141,7 +143,11 @@ class Feature extends Widget{
     *
     */
     public inline function getBlock (col:Int, row:Int) : Null<Block> {
-        return this._blocks[col][row];
+        if( col < 0 || col >= this.blocks.length || row < 0 || row >= this.blocks[0].length ){
+            return null;
+        }else{
+            return this._blocks[col][row];
+        }
     }//function getBlock()
 
 
@@ -150,7 +156,7 @@ class Feature extends Widget{
     *
     */
     public function step () : Void {
-        Actuate.timer(Main.cfg.speed).onComplete(this._performStep);
+        Actuate.timer(Main.cfg.speed).onComplete(this.performStep);
     }//function step()
 
 
@@ -158,18 +164,19 @@ class Feature extends Widget{
     * Start moving
     *
     */
-    private function _performStep () : Void {
+    public function performStep () : Void {
         //no space for further movement
-        if( !this._canMove() ){
+        if( !this.canMove() ){
             this.level.featureStopped(this);
 
         //go
         }else{
+            this.row ++;
             this.tween(Main.cfg.speed,{
-                top : (this.row + 1) * Main.cfg.block.size
+                top : this.row * Main.cfg.block.size
             }, "Quad.easeOut").onComplete(this._finishStep);
         }
-    }//function _performStep()
+    }//function performStep()
 
 
     /**
@@ -177,7 +184,6 @@ class Feature extends Widget{
     *
     */
     private function _finishStep () : Void {
-        this.row ++;
         //start next step
         this.step();
     }//function _finishStep()
@@ -187,7 +193,7 @@ class Feature extends Widget{
     * Check if feature can move down
     *
     */
-    private function _canMove () : Bool {
+    public function canMove () : Bool {
         //reached bottom line of game field
         if( this.rows + this.row >= Main.cfg.rows ){
             return false;
@@ -209,7 +215,7 @@ class Feature extends Widget{
         }
 
         return true;
-    }//function _canMove()
+    }//function canMove()
 
 
 /*******************************************************************************

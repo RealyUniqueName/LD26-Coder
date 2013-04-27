@@ -10,20 +10,23 @@
     <Widget skin:Paint-border="4">
         <!-- game field -->
         <Widget
-            name   = "'field'"
-            w      = "$Main.cfg.cols * $Main.cfg.block.size"
-            h      = "$Main.cfg.rows * $Main.cfg.block.size"
-            left   = "10"
-            bottom = "10"
+            overflow = "false"
+            name     = "'field'"
+            w        = "$Main.cfg.cols * $Main.cfg.block.size"
+            h        = "$Main.cfg.rows * $Main.cfg.block.size"
+            left     = "10"
+            bottom   = "10"
             skin:Paint-border="1"
         >
-            <Project name="'project'">
+            <Project name="'project'" widthPt="100" heightPt="100">
                 <Widget
-                    name = "'selector'"
-                    w    = "$Main.cfg.cols * $Main.cfg.block.size"
-                    h    = "$Main.cfg.block.size"
+                    bottom  = "0"
+                    name    = "'selector'"
+                    widthPt = "100"
+                    h       = "$Main.cfg.block.size"
                     skin:Paint-border = "2"
                     skin:Paint-borderColor = "0x00FF00"
+                    skin:Paint-color = "0x00FF00"
                 />
             </Project>
         </Widget>
