@@ -13,7 +13,7 @@ import ru.stablex.ui.widgets.Widget;
 class Feature extends Widget{
 
     //Feature structure
-    public var blocks : Array<Array<Int>>;
+    public var blocks (default,set_blocks) : Array<Array<Int>>;
     private var _blocks : Array<Array<Block>>;
     //get width in blocks for this feature
     public var cols (get_cols,never): Int;
@@ -34,11 +34,12 @@ class Feature extends Widget{
     /**
     * Create random feature
     *
+    * @param max - maximum feature size (cols and rows)
+    *
     */
-    static public function rnd () : Feature {
-        //max 4 blocks width/height
-        var rows = Std.random(4) + 1;
-        var cols = Std.random(4) + 1;
+    static public function rnd (max:Int) : Feature {
+        var rows = Std.random(max) + 1;
+        var cols = Std.random(max) + 1;
 
         //generate blocks
         var blocks : Array<Array<Int>> = [];
@@ -248,4 +249,16 @@ class Feature extends Widget{
         return UIBuilder.getAs("level", Level);
     }//function get_level
 
+
+    /**
+    * Setter `blocks`.
+    *
+    */
+    private inline function set_blocks (blocks:Array<Array<Int>>) : Array<Array<Int>> {
+        this.resize(
+            (blocks.length == 0 ? 0 : blocks.length * Main.cfg.block.size),
+            (blocks.length == 0 || blocks[0].length == 0 ? 0 : blocks[0].length * Main.cfg.block.size)
+        );
+        return this.blocks = blocks;
+    }//function set_blocks
 }//class Feature

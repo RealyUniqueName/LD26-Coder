@@ -18,9 +18,12 @@ class Level extends Widget{
     public var features : Array<Feature>;
     //current feature
     public var current : Feature;
+    //next feature
+    public var next : Feature;
+    //widget where to show next feature
+    public var displayNext : Widget;
     //player's project
     public var project : Project;
-
 
 /*******************************************************************************
 *       STATIC METHODS
@@ -38,8 +41,9 @@ class Level extends Widget{
     */
     override public function onCreate () : Void {
         super.onCreate();
-        this.field   = this.getChild("field");
-        this.project = this.field.getChildAs("project", Project);
+        this.field       = this.getChild("field");
+        this.project     = this.field.getChildAs("project", Project);
+        this.displayNext = this.getChild("displayNext");
     }//function onCreate()
 
 
@@ -48,7 +52,7 @@ class Level extends Widget{
     *
     */
     public function load (data:TLevelCfg = null) : Void {
-        this.project.load( Project.rnd(1) );
+        this.project.load( Project.rnd(3) );
     }//function load()
 
 
@@ -57,6 +61,7 @@ class Level extends Widget{
     *
     */
     public function start () : Void {
+        this.next = Feature.rnd(3);
         //drop first feature
         this.nextFeature();
     }//function start()
@@ -85,8 +90,13 @@ class Level extends Widget{
     *
     */
     public function nextFeature () : Void {
-        this.current = Feature.rnd();
+        this.current = this.next;
+        this.next    = Feature.rnd(3);
         this.field.addChild(this.current);
+        this.displayNext.addChild(this.next);
+
+        this.current.top  = 0;
+        this.current.left = this.current.col * Main.cfg.block.size;
         this.current.step();
     }//function nextFeature()
 
@@ -115,6 +125,7 @@ class Level extends Widget{
         //game over
         if( f.row <= 0 ){
             this.gameOver();
+
         //next feature
         }else{
             this.project.addFeature(f);
@@ -131,6 +142,16 @@ class Level extends Widget{
     public function gameOver () : Void {
         //code...
     }//function gameOver()
+
+
+    /**
+    * Try to rotate feature
+    * @param left - rotate left(true) or right(false)
+    *
+    */
+    public function rotateFeature (left:Bool = true) : Void {
+        //code...
+    }//function rotateFeature()
 
 /*******************************************************************************
 *       GETTERS / SETTERS

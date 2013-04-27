@@ -41,8 +41,8 @@ class Project extends Widget{
         }
 
         //calculate settings based on complexity{
-            var rows  : Int = (complexity < 6 ? 3 : Std.int(complexity / 2));
-            var holes : Int = Math.ceil(rows / 2);
+            var rows  : Int = complexity;
+            var holes : Int = Math.ceil(rows / 2) + 2;
         //}
 
         //fill structure

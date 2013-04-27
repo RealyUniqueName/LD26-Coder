@@ -16,7 +16,7 @@
             h        = "$Main.cfg.rows * $Main.cfg.block.size"
             left     = "10"
             bottom   = "10"
-            skin:Paint-border="1"
+            skin:Paint-border="2"
         >
             <Project name="'project'" widthPt="100" heightPt="100">
                 <Widget
@@ -32,8 +32,9 @@
         </Widget>
 
         <!-- features -->
-        <Widget w="100" h="200" right="10" top="20" skin:Paint-border="1">
-            <Text widthPt="100" align="'center,middle'" text="'Next feature'"/>
+        <Widget w="100" h="200" right="10" top="20" skin:Paint-border="1" layout:Row-rows="[20,-1]">
+            <Text align="'center,middle'" text="'Next feature'"/>
+            <VBox name="'displayNext'" />
         </Widget>
 
     </Widget>

@@ -11,6 +11,6 @@ typedef TCfg = {
     speed : Float,   //time for features to move down by one block
     block : {
         size  : Int,        // block size in pixels
-        types : Array<String>
+        types : Array<String> //first element MUST be null
     }
 }
