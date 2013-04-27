@@ -154,7 +154,24 @@ class Main{
     *
     */
     static public function playEndless () : Void {
-        //code...
+        //if level instance already exists, destroy it after creating new instance
+        var old : Level = UIBuilder.getAs("level", Level);
+        //free widget id to use it in new instance
+        if( old != null ){
+            old.id   = old.id + Math.random();
+            old.name = old.name + Math.random();
+        }
+
+        //create new instance
+        var level : Level = UIBuilder.buildFn("ui/level.xml")();
+        level.load(Main.levels[0], -1);
+        Main.vs.addChild(level);
+
+        //show level and start playing
+        Main.vs.show("level", function(){
+            if( old != null ) old.free();
+            level.start();
+        });
     }//function playEndless()
 
 

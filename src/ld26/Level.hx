@@ -81,6 +81,7 @@ class Level extends Widget{
         if( num >= 0 ){
             this.getChildAs("levelNumLabel", Text).text = "Level " + (num + 1);
         }else{
+            this.featuresLeftLabel.parent.visible  = false;
             this.getChild("levelNumLabel").visible = false;
         }
 
@@ -101,8 +102,13 @@ class Level extends Widget{
         //drop first feature
         this.nextFeature();
 
-        //start deadline timer
-        this.deadline.tween(this.cfg.deadline, {value:0}).onComplete(this.gameOver);
+        //start deadline timer for story mode
+        if( this.num >= 0 ){
+            this.deadline.tween(this.cfg.deadline, {value:0}).onComplete(this.gameOver);
+        //disable deadline for endless game
+        }else{
+            this.deadline.visible = false;
+        }
     }//function start()
 
 
@@ -133,7 +139,7 @@ class Level extends Widget{
     */
     public function nextFeature () : Void {
         if( this.stopped ) return;
-        if( this.featuresLeft < 0 ){
+        if( this.num >= 0 && this.featuresLeft < 0 ){
             this.victory();
             return;
         }
@@ -143,7 +149,7 @@ class Level extends Widget{
 
         //Feature.rnd(3);
         this.field.addChild(this.current);
-        if( this.featuresLeft > 0 ){
+        if( this.num < 0 || this.featuresLeft > 0 ){
             this.next    = this._getNextFeature();
             this.displayNext.addChild(this.next);
         }
@@ -159,13 +165,31 @@ class Level extends Widget{
     *
     */
     private function _getNextFeature () : Feature {
-        return UIBuilder.create(Feature, {
-            blocks : Main.structs[Std.random(
-                this.cfg.complexity < 8
-                    ? 8
-                    : (this.cfg.complexity <= Main.structs.length ? this.cfg.complexity : Main.structs.length)
-            )]
-        });
+        //story mode
+        if( this.num >= 0 ){
+            return UIBuilder.create(Feature, {
+                blocks : Main.structs[Std.random(
+                    this.cfg.complexity < 8
+                        ? 8
+                        : (this.cfg.complexity <= Main.structs.length ? this.cfg.complexity : Main.structs.length)
+                )]
+            });
+
+        //endless game
+        }else{
+            var complexity : Int = Std.int(Math.abs(this.num));
+            if( complexity > Main.structs.length ){
+                return Feature.rnd();
+            }else{
+                return UIBuilder.create(Feature, {
+                    blocks : Main.structs[Std.random(
+                        complexity < 8
+                            ? 8
+                            : (complexity <= Main.structs.length ? complexity : Main.structs.length)
+                    )]
+                });
+            }
+        }
     }//function _getNextFeature()
 
 
@@ -215,6 +239,11 @@ class Level extends Widget{
         this.stopped = true;
         this.deadline.tweenStop();
         UIBuilder.buildFn("ui/popup/gameOver.xml")().show();
+        //save scores for endless game
+        if( this.num < 0 ){
+            Main.data.endless.score = this.score;
+            Main.save();
+        }
     }//function gameOver()
 
 
@@ -243,6 +272,21 @@ class Level extends Widget{
         return;
         this.current.rotate(left);
     }//function rotateFeature()
+
+
+    /**
+    * Called everytime on refactoring
+    *
+    */
+    public function refactoring () : Void {
+        this.score += Main.cfg.score.refactoring;
+        //for endless game
+        if( this.num < 0 ){
+            this.num --;
+            Level.speed -= 0.02;
+            if( Level.speed < 0.1 ) Level.speed = 0.1;
+        }
+    }//function refactoring()
 
 
 /*******************************************************************************

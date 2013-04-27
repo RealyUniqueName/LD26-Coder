@@ -313,8 +313,8 @@ class Project extends Widget{
 
             //refactor this row
             if( refactor ){
-                //add score
-                this.level.score += Main.cfg.score.refactoring;
+                //notify level instance
+                this.level.refactoring();
                 //animate score{
                     var s = UIBuilder.create(Score, {
                         text : "+" + Main.cfg.score.refactoring,
