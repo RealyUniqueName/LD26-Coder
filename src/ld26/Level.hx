@@ -40,6 +40,9 @@ class Level extends Widget{
     public var num : Int = -1;
     //level stopped (voctory/gameover)
     public var stopped : Bool = false;
+    //hiscore
+    public var score (default,set_score) : Int = 0;
+    public var scoreLabel : Text;
 
 /*******************************************************************************
 *       STATIC METHODS
@@ -63,6 +66,7 @@ class Level extends Widget{
         this.displayNext       = this.getChild("displayNext");
         this.deadline          = this.getChildAs("deadline", Progress);
         this.featuresLeftLabel = this.getChildAs("featuresLeft", Text);
+        this.scoreLabel        = this.getChildAs("scoreLabel", Text);
     }//function onCreate()
 
 
@@ -73,6 +77,12 @@ class Level extends Widget{
     public function load (cfg:TLevelCfg, num:Int = -1) : Void {
         this.cfg = cfg;
         this.num = num;
+
+        if( num >= 0 ){
+            this.getChildAs("levelNumLabel", Text).text = "Level " + (num + 1);
+        }else{
+            this.getChild("levelNumLabel").visible = false;
+        }
 
         this.deadline.value = this.deadline.max = this.cfg.deadline;
         this.featuresLeft   = this.cfg.features;
@@ -214,7 +224,11 @@ class Level extends Widget{
     public function victory () : Void {
         this.stopped = true;
         this.deadline.tweenStop();
-        UIBuilder.buildFn("ui/popup/victory.xml")().show();
+        if( Main.levels.length <= this.num + 1 ){
+            UIBuilder.buildFn("ui/popup/impossibru.xml")().show();
+        }else{
+            UIBuilder.buildFn("ui/popup/victory.xml")().show();
+        }
     }//function victory()
 
 
@@ -244,5 +258,17 @@ class Level extends Widget{
         }
         return this.featuresLeft = featuresLeft;
     }//function set_featuresLeft
+
+
+    /**
+    * Setter `score`.
+    *
+    */
+    private function set_score (score:Int) : Int {
+        if( this.scoreLabel != null ){
+            this.scoreLabel.text = "Score: " + score;
+        }
+        return this.score = score;
+    }//function set_score
 
 }//class Level

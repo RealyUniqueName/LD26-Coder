@@ -38,4 +38,11 @@
         />
     </VBox>
 
+    <Score>
+        <Default
+            widthPt     = "100"
+            align       = "'center,middle'"
+            format-size = "30"
+        />
+    </Score>
 </Defaults>

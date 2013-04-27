@@ -36,15 +36,22 @@
             </Project>
         </Widget>
 
-        <!-- features -->
-        <Widget w="100" h="200" right="10" top="20" skin:Paint-border="1" layout:Row-rows="[20,-1,20]">
-            <Text align="'center,middle'" text="'Next feature'"/>
-            <VBox name="'displayNext'" />
-            <HBox>
-                <Text text="'Features left:'"/>
-                <Text name="'featuresLeft'" text="'0'"/>
-            </HBox>
-        </Widget>
+        <VBox w="100" right="10" top="20" childPadding="10" align="'top,right'">
+            <!-- features -->
+            <Widget w="100" h="200" skin:Paint-border="1" layout:Row-rows="[20,-1,20]">
+                <Text align="'center,middle'" text="'Next feature'"/>
+                <VBox name="'displayNext'" />
+                <HBox>
+                    <Text text="'Features left:'"/>
+                    <Text name="'featuresLeft'" text="'0'"/>
+                </HBox>
+            </Widget>
+
+            <Text text="'Level: '" name="'levelNumLabel'" widthPt="100" align="'center,middle'"/>
+
+            <Text text="'Score: '" name="'scoreLabel'" widthPt="100" align="'center,middle'"/>
+        </VBox>
+
 
     </Widget>
 

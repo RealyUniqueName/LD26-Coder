@@ -47,6 +47,7 @@ class Main{
         UIBuilder.regClass("ld26.Project");
         UIBuilder.regClass("ld26.Level");
         UIBuilder.regClass("ld26.Block");
+        UIBuilder.regClass("ld26.Score");
         UIBuilder.regClass("ld26.Popup");
         UIBuilder.init("ui/defaults.xml");
 

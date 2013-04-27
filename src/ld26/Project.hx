@@ -313,12 +313,24 @@ class Project extends Widget{
 
             //refactor this row
             if( refactor ){
+                //add score
+                this.level.score += Main.cfg.score.refactoring;
+                //animate score{
+                    var s = UIBuilder.create(Score, {
+                        text : "+" + Main.cfg.score.refactoring,
+                        top  : r * Main.cfg.block.size
+                    });
+                    this.addChild(s);
+                    s.animate();
+                //}
+
                 moveBy ++;
                 for(c in 0...Main.cfg.cols){
                     if( this.blocks[c][r] != null ){
                         this.blocks[c][r].refactored();
                     }
                 }
+
             //move this row
             }else if( moveBy > 0 ){
                 for(c in 0...Main.cfg.cols){

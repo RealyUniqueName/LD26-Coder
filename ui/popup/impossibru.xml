@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<Popup name="'popup'">
+    <VBox defaults="'popup'">
+        <Text text="'I-M-P-O-S-S-I-B-R-U !!!!'"/>
+        <Button text="'I\'m batman!'"/>
+    </VBox>
+</Popup>
