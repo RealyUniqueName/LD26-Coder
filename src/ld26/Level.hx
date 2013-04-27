@@ -113,6 +113,7 @@ class Level extends Widget{
     public function pause () : Void {
         this.stopped = true;
         Actuate.pauseAll();
+        UIBuilder.buildFn("ui/popup/pause.xml")().show();
     }//function pause()
 
 

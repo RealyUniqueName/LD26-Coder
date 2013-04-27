@@ -5,6 +5,7 @@
 
     <!-- header -->
     <Widget>
+        <Button text="'pause'" left="5" top="5" on-click="#Level(level).pause();"/>
         <!-- deadline bar -->
         <Progress name="'deadline'" bottom="0" widthPt="100" h="20" max="640" value="640" skin:Paint-border="4" skin:Paint-borderColor="0xFF0000" bar-skin:Paint-color="0x00FF00">
             <Text text="'Deadline'" right="10"/>

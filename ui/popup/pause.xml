@@ -3,15 +3,17 @@
 
 <Popup name="'popup'">
     <VBox defaults="'popup'">
-        <Text text="'Continue saved game?'"/>
+        <Text text="'Paused'"/>
         <HBox childPadding="10">
-            <Button text="'New game'" on-click="
+            <Button text="'Exit to menu'" on-click="
                 $this.getParentAs('popup', $Popup).close();
-                Main.playStory(true);
+                $Main.vs.show('menu', function(){
+                    #level.free();
+                });
             "/>
             <Button text="'Continue'" on-click="
                 $this.getParentAs('popup', $Popup).close();
-                Main.playLevel($Main.data.story.level);
+                #Level(level).resume();
             "/>
         </HBox>
     </VBox>

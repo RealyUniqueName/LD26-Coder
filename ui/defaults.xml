@@ -9,7 +9,7 @@
             label-mouseEnabled = "false"
             label-autoSize     = "nme.text.TextFieldAutoSize.LEFT"
             format-bold        = "true"
-            format-size        = "20"
+            format-size        = "14"
             skin:Paint-color   = "0xAAAAAA"
         />
         <mainMenu

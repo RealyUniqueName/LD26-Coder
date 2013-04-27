@@ -133,6 +133,9 @@ class Main{
             old.name = old.name + Math.random();
         }
 
+        Main.data.story.level = n;
+        Main.save();
+
         //create new instance
         var level : Level = UIBuilder.buildFn("ui/level.xml")();
         level.load(Main.levels[n], n);
