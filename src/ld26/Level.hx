@@ -165,6 +165,7 @@ class Level extends Widget{
     *
     */
     private function _getNextFeature () : Feature {
+        return ld26.Feature.rnd();
         //story mode
         if( this.num >= 0 ){
             return UIBuilder.create(Feature, {
@@ -299,7 +300,7 @@ class Level extends Widget{
         if( this.num < 0 ){
             this.num --;
             Level.speed -= 0.02;
-            if( Level.speed < 0.1 ) Level.speed = 0.1;
+            if( Level.speed < 0.25 ) Level.speed = 0.25;
         }
     }//function refactoring()
 

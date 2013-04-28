@@ -43,6 +43,7 @@ class Feature extends Widget{
     static public function rnd (max:Int = 3, min:Int = 2) : Feature {
         var rows = Std.random(max - min + 1) + min;
         var cols = Std.random(max - min + 1) + min;
+        var tile = Std.random(Main.cfg.block.types.length - 2) + 1;
 
         //generate blocks
         var blocks : Array<Array<Int>> = [];
@@ -50,7 +51,7 @@ class Feature extends Widget{
             blocks.push([]);
             for(r in 0...rows){
                 //put random block
-                blocks[c].push( Std.random(Main.cfg.block.types.length) );
+                blocks[c].push( Std.random(2) == 1 ? 0 : tile );
             }
         }
 
@@ -67,7 +68,7 @@ class Feature extends Widget{
                     }
                 }
                 if( empty ){
-                    blocks[c][ Std.random(rows) ] = Std.random(Main.cfg.block.types.length - 1) + 1;
+                    blocks[c][ Std.random(rows) ] = tile;
                 }
             }
 
@@ -81,7 +82,7 @@ class Feature extends Widget{
                     }
                 }
                 if( empty ){
-                    blocks[ Std.random(cols) ][r] = Std.random(Main.cfg.block.types.length - 1) + 1;
+                    blocks[ Std.random(cols) ][r] = tile;
                 }
             }
         //}

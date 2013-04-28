@@ -10,7 +10,12 @@
         size  : 32,
         types : [
             null,   //no block. First element MUST be null
-            "assets/img/block.png"
+            "assets/img/red.png",
+            //"assets/img/green.png",
+            "assets/img/blue.png",
+            "assets/img/brown.png",
+            "assets/img/orange.png",
+            //"assets/img/yellow.png"
         ]
     }
 }

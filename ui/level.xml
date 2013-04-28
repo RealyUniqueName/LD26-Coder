@@ -22,7 +22,9 @@
             h        = "$Main.cfg.rows * $Main.cfg.block.size"
             left     = "10"
             bottom   = "10"
-            skin:Paint-border="2"
+            skin:Tile-src="'assets/img/field.jpg'"
+            skin:Tile-border="4"
+            skin:Tile-borderColor="0xcdc4d9"
         >
             <Project name="'project'" widthPt="100" heightPt="100">
                 <Widget
@@ -31,8 +33,9 @@
                     widthPt = "100"
                     h       = "$Main.cfg.block.size"
                     skin:Paint-border = "2"
-                    skin:Paint-borderColor = "0x00FF00"
+                    skin:Paint-borderColor = "0x009900"
                     skin:Paint-color = "0x00FF00"
+                    skin:Paint-alpha = "0.2"
                 />
             </Project>
         </Widget>
