@@ -7,6 +7,7 @@
         <HBox childPadding="10">
             <Button text="'Exit to menu'" on-click="
                 $this.getParentAs('popup', $Popup).close();
+                $Sfx.playTheme('theme');
                 $Main.vs.show('menu', function(){
                     #level.free();
                 });

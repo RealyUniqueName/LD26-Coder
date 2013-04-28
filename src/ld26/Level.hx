@@ -2,6 +2,7 @@ package ld26;
 
 import haxe.Timer;
 import motion.Actuate;
+import ru.stablex.Assets;
 import ru.stablex.ui.events.WidgetEvent;
 import ru.stablex.ui.UIBuilder;
 import ru.stablex.ui.widgets.Progress;
@@ -112,12 +113,17 @@ class Level extends Widget{
         //drop first feature
         this.nextFeature();
 
-        Sfx.stopTheme();
+        Sfx.playTheme("themeLevel");
 
         //start deadline timer for story mode
         if( this.num >= 0 ){
             if( this.num == 0 ){
-                Sfx.play("blablabla");
+                // Sfx.play("blablabla");
+                var tutorial = UIBuilder.create(Text, {
+                    defaults : "tutorial",
+                    text     : Assets.embedStr("assets/speech.txt")
+                });
+                this.field.addChildAt(tutorial, 0);
             }else{
                 this.deadline.addEventListener(WidgetEvent.CHANGE, this._bossSpeech);
             }

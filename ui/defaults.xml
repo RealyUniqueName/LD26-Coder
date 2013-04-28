@@ -11,6 +11,18 @@
             label-embedFonts = "true"
             label-selectable = "false"
         />
+        <tutorial
+            format-font      = "$Assets.getFont('assets/fonts/piedra.ttf').fontName"
+            format-color     = "0x9d96a6"
+            format-size      = "16"
+            label-autoSize   = "nme.text.TextFieldAutoSize.NONE"
+            widthPt          = "100"
+            heightPt         = "100"
+            label-wordWrap   = "true"
+            label-embedFonts = "true"
+            label-selectable = "false"
+            on-resize        = "$this.label.height = $this.h;"
+        />
     </Text>
     <Button>
         <Default
@@ -24,6 +36,7 @@
             format-font        = "$Assets.getFont('assets/fonts/piedra.ttf').fontName"
             format-size        = "14"
             format-color       = "0xcdc4d9"
+            format-align       = "nme.text.TextFormatAlign.CENTER"
             skin:Tile-src      = "'assets/img/greenBg.jpg'"
             skin:Tile-corners  = "[10]"
         />

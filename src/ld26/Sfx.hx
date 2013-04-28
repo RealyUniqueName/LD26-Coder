@@ -13,7 +13,8 @@ import ru.stablex.ui.UIBuilder;
 *
 */
 class Sfx {
-
+    //current theme
+    static public var theme  : String = "theme";
     //description
     static private var _theme : SoundChannel;
 
@@ -26,7 +27,7 @@ class Sfx {
     * Start sound
     *
     */
-    static public function play (snd:String, showBossSpeech:Bool = false) : SoundChannel {
+    static public function play (snd:String, showBossSpeech:Bool = false) : Null<SoundChannel> {
         var snd = Assets.getSound(
             #if flash
                 "assets/snd/" + snd + ".mp3"
@@ -54,16 +55,29 @@ class Sfx {
 
 
     /**
+    * Start playing provided theme
+    *
+    */
+    static public inline function playTheme (theme:String) : Void {
+        Sfx.theme = theme;
+        Sfx.stopTheme();
+        Sfx.startTheme();
+    }//function playTheme()
+
+
+    /**
     * Start soundtrack
     *
     */
-    static public function startTheme (e:Event) : Void {
+    static public function startTheme (e:Event = null) : Void {
         if( Sfx._theme != null ) {
             Sfx._theme.removeEventListener(Event.SOUND_COMPLETE, Sfx.startTheme);
         }
 
-        Sfx._theme = Sfx.play("theme");
-        Sfx._theme.addEventListener(Event.SOUND_COMPLETE, Sfx.startTheme);
+        Sfx._theme = Sfx.play(Sfx.theme);
+        if( Sfx._theme != null ){
+            Sfx._theme.addEventListener(Event.SOUND_COMPLETE, Sfx.startTheme);
+        }
     }//function startTheme()
 
 

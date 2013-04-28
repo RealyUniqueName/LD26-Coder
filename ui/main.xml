@@ -3,7 +3,7 @@
 
 <Widget id="'root'" w="480" h="640" skin:Paint-color="0xFFFFFF" alpha="0" on-display="
     $Sfx.play('intro');
-    $this.tween(1, {alpha:1}).delay(1).onComplete(Sfx.startTheme, [null]);
+    $this.tween(1, {alpha:1}).delay(1).onComplete(Sfx.playTheme, ['theme']);
 ">
     <ViewStack name="'vs'" widthPt="100" heightPt="100" trans:Slide-duration="0.5">
 
