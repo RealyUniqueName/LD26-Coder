@@ -362,7 +362,7 @@ class Feature extends Widget{
         }
 
         //choose tile
-        var tile = Std.random(Main.cfg.block.types.length - 2) + 1;
+        var tile = Std.random(Main.cfg.block.types.length - 1) + 1;
         for(c in 0...blocks.length){
             for(r in 0...blocks[0].length){
                 if( blocks[c][r] != 0 ){

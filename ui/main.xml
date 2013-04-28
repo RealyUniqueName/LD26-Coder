@@ -3,7 +3,7 @@
 
 <Widget id="'root'" w="480" h="640" skin:Paint-color="0xFFFFFF" alpha="0" on-display="
     $Sfx.play('intro');
-    $this.tween(1, {alpha:1}).delay(3.6).onComplete(Sfx.startTheme, [null]);
+    $this.tween(1, {alpha:1}).delay(1).onComplete(Sfx.startTheme, [null]);
 ">
     <ViewStack name="'vs'" widthPt="100" heightPt="100" trans:Slide-duration="0.5">
 
@@ -12,6 +12,9 @@
             <Text format-size="80" text="'Coder'"/>
             <Button text="'Story'" defaults="'Default,mainMenu'" on-click="$Main.playStory();Sfx.stopTheme();"/>
             <Button text="'Endless'" defaults="'Default,mainMenu'" on-click="$Main.playEndless();Sfx.stopTheme();"/>
+            <Widget>
+                <Text text="'by Alexander Kuzmenko for LD26'" format-size="12" top="80" />
+            </Widget>
         </VBox>
 
     </ViewStack>

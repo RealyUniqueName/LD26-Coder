@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<Popup name="'popup'">
+<Popup name="'popup'" on-display="$Sfx.play('tada');">
     <VBox defaults="'popup'">
         <Text text="'I-M-P-O-S-S-I-B-R-U !!!!'" format-size="30"/>
         <Button text="'I\'m batman!'"/>

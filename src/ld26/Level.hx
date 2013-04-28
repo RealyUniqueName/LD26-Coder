@@ -2,6 +2,7 @@ package ld26;
 
 import haxe.Timer;
 import motion.Actuate;
+import ru.stablex.ui.events.WidgetEvent;
 import ru.stablex.ui.UIBuilder;
 import ru.stablex.ui.widgets.Progress;
 import ru.stablex.ui.widgets.Text;
@@ -115,12 +116,34 @@ class Level extends Widget{
 
         //start deadline timer for story mode
         if( this.num >= 0 ){
+            if( this.num == 0 ){
+                Sfx.play("blablabla");
+            }else{
+                this.deadline.addEventListener(WidgetEvent.CHANGE, this._bossSpeech);
+            }
             this.deadline.tween(this.cfg.deadline, {value:0}).onComplete(this.gameOver);
         //disable deadline for endless game
         }else{
             this.deadline.visible = false;
         }
     }//function start()
+
+
+    private var _lastDeadlineSpeech : Float = 0;
+    /**
+    * On deadline change play boss' phrases
+    *
+    */
+    private function _bossSpeech (e:WidgetEvent) : Void {
+        if( this._lastDeadlineSpeech == 0 ){
+            this._lastDeadlineSpeech = 0.7;
+        }
+        if( this.deadline.value / this.deadline.max <= this._lastDeadlineSpeech ){
+            var snd : Array<String> = ["boss_faster", "boss_code", "boss_time"];
+            Sfx.play( snd[Std.random(snd.length)], true );
+            this._lastDeadlineSpeech -= 0.3;
+        }
+    }//function _bossSpeech()
 
 
     /**
@@ -305,6 +328,7 @@ class Level extends Widget{
     *
     */
     public function refactoring () : Void {
+        Sfx.play("bam");
         this.score += Main.cfg.score.refactoring;
         //for endless game
         if( this.num < 0 ){

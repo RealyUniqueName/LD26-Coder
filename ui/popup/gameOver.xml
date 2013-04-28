@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<Popup name="'popup'">
+<Popup name="'popup'" on-display="$Sfx.play('boss_fired', true);">
     <VBox defaults="'popup'">
         <Text text="'You\'re fired!'" format-size="40"/>
         <Bmp src="'assets/img/boss.jpg'">

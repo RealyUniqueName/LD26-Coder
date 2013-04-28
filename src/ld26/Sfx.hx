@@ -3,6 +3,7 @@ package ld26;
 import nme.events.Event;
 import nme.media.SoundChannel;
 import ru.stablex.Assets;
+import ru.stablex.ui.UIBuilder;
 
 
 
@@ -33,6 +34,18 @@ class Sfx {
                 "assets/snd/" + snd + ".wav"
             #end
         );
+        //show boss speech
+        if( showBossSpeech ){
+            var level = UIBuilder.getAs("level", Level);
+
+            if( level != null ){
+                level.fckBoss.visible = true;
+                level.fckBoss.tween(0.5, {alpha:0}).delay(1.5).onComplete(function(){
+                    level.fckBoss.alpha = 1;
+                    level.fckBoss.visible = false;
+                });
+            }
+        }
         //no sound found
         if( snd == null ) return null;
 
