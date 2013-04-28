@@ -47,7 +47,8 @@
 
     <VBox>
         <popup
-            padding      = "10"
+            w       = "200"
+            padding = "10"
             childPadding = "10"
             skin:Paint-color  = "0xDDDDDD"
             skin:Paint-border = "4"

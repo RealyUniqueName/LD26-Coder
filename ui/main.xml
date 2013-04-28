@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<Widget id="'root'" w="480" h="640">
+<Widget id="'root'" w="480" h="640" skin:Paint-color="0xFFFFFF">
     <ViewStack name="'vs'" widthPt="100" heightPt="100" trans:Slide-duration="0.5">
 
         <!-- main menu -->

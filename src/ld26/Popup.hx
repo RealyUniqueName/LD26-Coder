@@ -2,7 +2,10 @@ package ld26;
 
 import nme.display.Sprite;
 import nme.Lib;
+import ru.stablex.ui.UIBuilder;
+import ru.stablex.ui.widgets.Bmp;
 import ru.stablex.ui.widgets.Floating;
+import ru.stablex.ui.widgets.Widget;
 
 
 /**
@@ -10,7 +13,10 @@ import ru.stablex.ui.widgets.Floating;
 *
 */
 class Popup extends Floating{
-    static public inline var ANIM_TIME = 1;
+    static public inline var ANIM_TIME = 0.6;
+
+    //finger sprite
+    private var _finger : Widget;
 
 /*******************************************************************************
 *       STATIC METHODS
@@ -29,11 +35,31 @@ class Popup extends Floating{
     override public function show () : Void {
         this.leftPt = this.topPt  = 100;
         super.show();
+
+        //add finger
+        if( this._finger == null ){
+            this._finger = UIBuilder.create(Widget, {
+                name          : "finger",
+                mouseEnabled  : false,
+                mouseChildren : false,
+                children      : [
+                    UIBuilder.create(Bmp,{
+                        src  : "assets/img/finger.png",
+                        top  : -30,
+                        left : 50
+                    })
+                ]
+            });
+            this.addChild(this._finger);
+        }
+
         //animate
         this.tween(ANIM_TIME, {
             left : 0,
             top  : 0
-        }, "Back.easeOut");
+        }, "Quad.easeOut").onComplete(function(){
+            this._finger.tween(ANIM_TIME / 3, {top:this.w, left:this.w});
+        });
     }//function show()
 
 
@@ -50,10 +76,15 @@ class Popup extends Floating{
             }
         }
         //anim
-        this.tween(ANIM_TIME, {
-            top  : Lib.current.stage.stageHeight,
-            left : Lib.current.stage.stageWidth
-        }, "Back.easeIn").onComplete(this.free, [true]);
+        this._finger.tween(ANIM_TIME / 3, {
+            top  : this.h / 2 + 50,
+            left : this.w / 2
+        }).onComplete(function(){
+            this.tween(ANIM_TIME, {
+                top  : Lib.current.stage.stageHeight,
+                left : Lib.current.stage.stageWidth
+            }, "Quad.easeIn").onComplete(this.free, [true]);
+        });
     }//function close()
 
 /*******************************************************************************

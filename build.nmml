@@ -4,7 +4,7 @@
     <meta title="Coder" package="ru.stablex.ld26" version="0.0.1" company="R.U.N" />
     <app path="./build" file="coder" main="ld26.Main"/>
 
-    <window width="480" height="640" orientation="portrait" resizable="false" fps="60"/>
+    <window width="480" height="640" orientation="portrait" background="0x000000" resizable="false" fps="60"/>
 
     <assets path="assets/img" include="*" />
     <assets path="assets/fonts" include="*.ttf" />
