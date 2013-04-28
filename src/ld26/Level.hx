@@ -111,6 +111,8 @@ class Level extends Widget{
         //drop first feature
         this.nextFeature();
 
+        Sfx.stopTheme();
+
         //start deadline timer for story mode
         if( this.num >= 0 ){
             this.deadline.tween(this.cfg.deadline, {value:0}).onComplete(this.gameOver);
@@ -212,7 +214,7 @@ class Level extends Widget{
             Actuate.stop(this.current.actuateTimer, null, false, false);
             this.current.actuateTimer = null;
         }
-
+        Sfx.play("popup");
         this.current.dropped = true;
         while( this.current.canMove() ){
             this.current.row ++;

@@ -233,6 +233,8 @@ class Project extends Widget{
             }//if()
         //}
 
+        Sfx.play("blockMove");
+
         //move blocks
         for(c in 0...row.length){
             if( row[c] == null ){
@@ -317,7 +319,7 @@ class Project extends Widget{
                 this.level.refactoring();
                 //animate score{
                     var s = UIBuilder.create(Score, {
-                        text : "+" + Main.cfg.score.refactoring,
+                        text : "Refactoring!  +" + Main.cfg.score.refactoring,
                         top  : r * Main.cfg.block.size
                     });
                     this.addChild(s);

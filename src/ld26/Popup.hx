@@ -53,6 +53,8 @@ class Popup extends Floating{
             this.addChild(this._finger);
         }
 
+        Sfx.play("popup");
+
         //animate
         this.tween(ANIM_TIME, {
             left : 0,
@@ -80,6 +82,7 @@ class Popup extends Floating{
             top  : this.h / 2 + 50,
             left : this.w / 2
         }).onComplete(function(){
+            Sfx.play("popup");
             this.tween(ANIM_TIME, {
                 top  : Lib.current.stage.stageHeight,
                 left : Lib.current.stage.stageWidth

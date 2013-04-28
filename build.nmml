@@ -8,6 +8,7 @@
 
     <assets path="assets/img" include="*" />
     <assets path="assets/fonts" include="*.ttf" />
+    <assets path="assets/snd" include="*.mp3" if="flash" />
 
     <classpath name="src" />
 

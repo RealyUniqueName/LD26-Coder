@@ -355,10 +355,20 @@ class Feature extends Widget{
     * Setter `blocks`.
     *
     */
-    private inline function set_blocks (blocks:Array<Array<Int>>) : Array<Array<Int>> {
+    private function set_blocks (blocks:Array<Array<Int>>) : Array<Array<Int>> {
         //rotate structure
         for(i in 0...Std.random(4)){
             blocks = Feature.rotateArray(blocks);
+        }
+
+        //choose tile
+        var tile = Std.random(Main.cfg.block.types.length - 2) + 1;
+        for(c in 0...blocks.length){
+            for(r in 0...blocks[0].length){
+                if( blocks[c][r] != 0 ){
+                    blocks[c][r] = tile;
+                }
+            }
         }
 
         this.resize(

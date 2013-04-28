@@ -1,0 +1,9 @@
+It's like tetris reverted.
+Here you see your projects code blocks in the bottom. Your boss wants you to implement
+features wich usually don't fit well in your project. So you start modifying code blocks here
+and there all over the project. Sometimes this process leads to sucessful refactoring, wich allows you to remove
+unnecessary code from project.
+You should always seek for minimalism in your project, because less code is easier to modify
+and allows you to implement new features faster.
+Now try to move code blocks with arrow keys. When you're ready to implement incoming feature, hit space.
+Keep an eye on deadline! If you fail to implement all features till deadline, your boss will fire you.
