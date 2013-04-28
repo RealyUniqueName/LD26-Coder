@@ -111,6 +111,7 @@ class Main{
             UIBuilder.buildFn("ui/popup/restartStory.xml")().show();
         }else{
             Main.data.story.level = 0;
+            Main.data.story.score = 0;
             Main.save();
             Main.playLevel(Main.data.story.level);
         }

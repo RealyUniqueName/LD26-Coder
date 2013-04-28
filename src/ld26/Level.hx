@@ -238,7 +238,11 @@ class Level extends Widget{
     public function gameOver () : Void {
         this.stopped = true;
         this.deadline.tweenStop();
-        UIBuilder.buildFn("ui/popup/gameOver.xml")().show();
+
+        UIBuilder.buildFn("ui/popup/gameOver.xml")({
+            score : (this.num >= 0 ? Main.data.story.score : 0) + this.score
+        }).show();
+
         //save scores for endless game
         if( this.num < 0 ){
             Main.data.endless.score = this.score;
@@ -254,10 +258,21 @@ class Level extends Widget{
     public function victory () : Void {
         this.stopped = true;
         this.deadline.tweenStop();
+
+        var data = {
+            score : (this.num >= 0 ? Main.data.story.score : 0) + this.score
+        };
+
         if( Main.levels.length <= this.num + 1 ){
-            UIBuilder.buildFn("ui/popup/impossibru.xml")().show();
+            UIBuilder.buildFn("ui/popup/impossibru.xml")(data).show();
         }else{
-            UIBuilder.buildFn("ui/popup/victory.xml")().show();
+            UIBuilder.buildFn("ui/popup/victory.xml")(data).show();
+        }
+
+        //save scores for story mode
+        if( this.num >= 0 ){
+            Main.data.story.score += this.score;
+            Main.save();
         }
     }//function victory()
 

@@ -4,6 +4,7 @@
 <Popup name="'popup'">
     <VBox defaults="'popup'">
         <Text text="'Victory!'"/>
+        <Text text="'Total score: ' + @score" />
         <Button text="'Next'" on-click="
             $this.getParentAs('popup', $Popup).close();
             $Main.playLevel(#Level(level).num + 1);

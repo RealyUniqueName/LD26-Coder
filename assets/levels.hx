@@ -23,56 +23,56 @@
     //level 4
     {
         complexity : 5,
-        speed      : 0.2,
+        speed      : 0.3,
         deadline   : 60,
         features   : 25
     },
     //level 5
     {
         complexity : 5,
-        speed      : 0.1,
+        speed      : 0.3,
         deadline   : 60,
         features   : 30
     },
     //level 6
     {
         complexity : 6,
-        speed      : 0.1,
+        speed      : 0.3,
         deadline   : 60,
         features   : 35
     },
     //level 7
     {
         complexity : 7,
-        speed      : 0.1,
+        speed      : 0.3,
         deadline   : 60,
         features   : 40
     },
     //level 8
     {
         complexity : 8,
-        speed      : 0.1,
+        speed      : 0.3,
         deadline   : 60,
         features   : 45
     },
     //level 9
     {
         complexity : 9,
-        speed      : 0.1,
+        speed      : 0.3,
         deadline   : 60,
         features   : 50
     },
     //level 10
     {
         complexity : 10,
-        speed      : 0.1,
+        speed      : 0.3,
         deadline   : 60,
         features   : 55
     },
     //level 11
     {
         complexity : 11,
-        speed      : 0.1,
+        speed      : 0.3,
         deadline   : 60,
         features   : 60
     }
