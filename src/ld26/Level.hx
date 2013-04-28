@@ -165,7 +165,6 @@ class Level extends Widget{
     *
     */
     private function _getNextFeature () : Feature {
-        return ld26.Feature.rnd();
         //story mode
         if( this.num >= 0 ){
             return UIBuilder.create(Feature, {

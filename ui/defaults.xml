@@ -2,20 +2,37 @@
 
 
 <Defaults>
+    <Text>
+        <Default
+            label-filters    = "[new nme.filters.GlowFilter(0x333333, 1, 2, 2)]"
+            format-font      = "$Assets.getFont('assets/fonts/piedra.ttf').fontName"
+            format-color     = "0xcdc4d9"
+            format-size      = "16"
+            label-embedFonts = "true"
+            label-selectable = "false"
+        />
+    </Text>
     <Button>
         <Default
-            padding            = "5"
+            padding = "5"
+            h       = "30"
+            label-filters      = "[new nme.filters.GlowFilter(0x333333, 1, 2, 2)]"
             label-selectable   = "false"
             label-mouseEnabled = "false"
+            label-embedFonts   = "true"
             label-autoSize     = "nme.text.TextFieldAutoSize.LEFT"
-            format-bold        = "true"
+            format-font        = "$Assets.getFont('assets/fonts/piedra.ttf').fontName"
             format-size        = "14"
-            skin:Paint-color   = "0xAAAAAA"
+            format-color       = "0xcdc4d9"
+            skin:Tile-src      = "'assets/img/greenBg.jpg'"
+            skin:Tile-corners  = "[10]"
         />
         <mainMenu
             w="280"
             h="80"
             format-size = "40"
+            skin:Tile-src     = "'assets/img/greenBg.jpg'"
+            skin:Tile-corners = "[40]"
         />
     </Button>
 
@@ -40,9 +57,14 @@
 
     <Score>
         <Default
-            widthPt     = "100"
-            align       = "'center,middle'"
-            format-size = "30"
+            widthPt          = "100"
+            align            = "'center,middle'"
+            label-embedFonts = "true"
+            label-selectable = "false"
+            format-size      = "30"
+            format-color     = "0xcdc4d9"
+            label-filters    = "[new nme.filters.GlowFilter(0x333333, 1, 2, 2)]"
+            format-font      = "$Assets.getFont('assets/fonts/piedra.ttf').fontName"
         />
     </Score>
 </Defaults>

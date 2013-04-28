@@ -7,6 +7,7 @@
     <window width="480" height="640" orientation="portrait" resizable="false" fps="60"/>
 
     <assets path="assets/img" include="*" />
+    <assets path="assets/fonts" include="*.ttf" />
 
     <classpath name="src" />
 

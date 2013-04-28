@@ -5,15 +5,27 @@
 
     <!-- header -->
     <Widget>
-        <Button text="'pause'" left="5" top="5" on-click="#Level(level).pause();"/>
         <!-- deadline bar -->
-        <Progress name="'deadline'" bottom="0" widthPt="100" h="20" max="640" value="640" skin:Paint-border="4" skin:Paint-borderColor="0xFF0000" bar-skin:Paint-color="0x00FF00">
-            <Text text="'Deadline'" right="10"/>
+        <Progress
+            name="'deadline'"
+            bottom="0"
+            widthPt="95"
+            leftPt="2.5"
+            h="20"
+            max="640"
+            value="640"
+            skin:Tile-borderColor="0xcdc4d9"
+            skin:Tile-border="2"
+            skin:Tile-src="'assets/img/barBg.jpg'"
+            bar-skin:Tile-src="'assets/img/barFill.png'"
+            bar-skin:Tile-padding="1"
+        >
+            <Text text="'Deadline'" heightPt="100" align="'center,middle'" right="10"/>
         </Progress>
     </Widget>
 
 
-    <Widget skin:Paint-border="4">
+    <Widget>
         <!-- game field -->
         <Widget
             overflow = "false"
@@ -42,18 +54,19 @@
 
         <VBox w="100" right="10" top="20" childPadding="10" align="'top,right'">
             <!-- features -->
-            <Widget w="100" h="200" skin:Paint-border="1" layout:Row-rows="[20,-1,20]">
+            <Widget w="100" h="200" skin:Paint-borderColor="0xcdc4d9" skin:Paint-border="2" layout:Row-rows="[20,-1,20]">
                 <Text align="'center,middle'" text="'Next feature'"/>
                 <VBox name="'displayNext'" />
                 <HBox>
-                    <Text text="'Features left:'"/>
                     <Text name="'featuresLeft'" text="'0'"/>
+                    <Text text="'to finish'"/>
                 </HBox>
             </Widget>
 
             <Text text="'Level: '" name="'levelNumLabel'" widthPt="100" align="'center,middle'"/>
-
             <Text text="'Score: '" name="'scoreLabel'" widthPt="100" align="'center,middle'"/>
+
+            <Button text="'pause'" widthPt="100" on-click="#Level(level).pause();"/>
         </VBox>
 
 
