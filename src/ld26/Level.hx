@@ -43,6 +43,8 @@ class Level extends Widget{
     //hiscore
     public var score (default,set_score) : Int = 0;
     public var scoreLabel : Text;
+    //boss is speaking
+    public var fckBoss : Widget;
 
 /*******************************************************************************
 *       STATIC METHODS
@@ -67,6 +69,7 @@ class Level extends Widget{
         this.deadline          = this.getChildAs("deadline", Progress);
         this.featuresLeftLabel = this.getChildAs("featuresLeft", Text);
         this.scoreLabel        = this.getChildAs("scoreLabel", Text);
+        this.fckBoss           = this.getChild("fckBoss");
     }//function onCreate()
 
 
@@ -77,6 +80,12 @@ class Level extends Widget{
     public function load (cfg:TLevelCfg, num:Int = -1) : Void {
         this.cfg = cfg;
         this.num = num;
+
+        if( this.num < 0 ){
+            this.getChildAs("projectName", Text).text = "Impossible project";
+        }else{
+            this.getChildAs("projectName", Text).text = "Project: " + cfg.title;
+        }
 
         if( num >= 0 ){
             this.getChildAs("levelNumLabel", Text).text = "Level " + (num + 1);

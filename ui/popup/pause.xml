@@ -3,7 +3,7 @@
 
 <Popup name="'popup'">
     <VBox defaults="'popup'">
-        <Text text="'Paused'"/>
+        <Text text="'Paused'" format-size="40"/>
         <HBox childPadding="10">
             <Button text="'Exit to menu'" on-click="
                 $this.getParentAs('popup', $Popup).close();

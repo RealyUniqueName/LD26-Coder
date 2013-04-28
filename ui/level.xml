@@ -5,6 +5,7 @@
 
     <!-- header -->
     <Widget>
+        <Text widthPt="100" align="'center,middle'" name="'projectName'" text="''"/>
         <!-- deadline bar -->
         <Progress
             name="'deadline'"
@@ -53,6 +54,11 @@
         </Widget>
 
         <VBox w="100" right="10" top="20" childPadding="10" align="'top,right'">
+            <!-- boss -->
+            <Bmp src="'assets/img/boss.jpg'">
+                <Bmp name="'fckBoss'" src="'assets/img/fck.png'" left="-90" top="50" visible="false"/>
+            </Bmp>
+
             <!-- features -->
             <Widget w="100" h="200" skin:Paint-borderColor="0xcdc4d9" skin:Paint-border="2" layout:Row-rows="[20,-1,20]">
                 <Text align="'center,middle'" text="'Next feature'"/>
@@ -64,7 +70,7 @@
             </Widget>
 
             <Text text="'Level: '" name="'levelNumLabel'" widthPt="100" align="'center,middle'"/>
-            <Text text="'Score: '" name="'scoreLabel'" widthPt="100" align="'center,middle'"/>
+            <Text text="'Score: 0'" name="'scoreLabel'" widthPt="100" align="'center,middle'"/>
 
             <Button text="'pause'" widthPt="100" on-click="#Level(level).pause();"/>
         </VBox>

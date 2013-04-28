@@ -3,7 +3,7 @@
 
 <Popup name="'popup'">
     <VBox defaults="'popup'">
-        <Text text="'I-M-P-O-S-S-I-B-R-U !!!!'"/>
+        <Text text="'I-M-P-O-S-S-I-B-R-U !!!!'" format-size="30"/>
         <Button text="'I\'m batman!'"/>
     </VBox>
 </Popup>
