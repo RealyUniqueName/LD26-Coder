@@ -236,10 +236,10 @@ class Feature extends Widget{
     *
     */
     public function canMove () : Bool {
-        //reached bottom line of game field
-        if( this.rows + this.row >= Main.cfg.rows ){
-            return false;
-        }
+        // //reached bottom line of game field
+        // if( this.rows + this.row >= Main.cfg.rows ){
+        //     return false;
+        // }
 
         //check bottom blocks in each column
         for(c in 0...this.cols){
@@ -249,7 +249,10 @@ class Feature extends Widget{
                 //next cell for this block is occupied in project
                 if(
                     b != null
-                    && this.level.project.blocks[b.absCol][b.absRow + 1] != null
+                    && (
+                        b.absRow + 1 >= Main.cfg.rows
+                        || this.level.project.blocks[b.absCol][b.absRow + 1] != null
+                    )
                 ){
                     return false;
                 }

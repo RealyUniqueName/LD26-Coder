@@ -339,8 +339,8 @@ class Level extends Widget{
         //for endless game
         if( this.num < 0 ){
             this.num --;
-            Level.speed -= 0.02;
-            if( Level.speed < 0.25 ) Level.speed = 0.25;
+            Level.speed -= 0.05;
+            if( Level.speed < 0.2 ) Level.speed = 0.2;
         }
     }//function refactoring()
 
