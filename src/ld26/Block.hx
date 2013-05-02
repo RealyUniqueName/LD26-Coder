@@ -54,7 +54,9 @@ class Block extends Bmp {
         this.top  = p.y;
         Main.root.addChild(this);
 
-        this.filters = [new nme.filters.DropShadowFilter(6)];
+        #if !html5
+            this.filters = [new nme.filters.DropShadowFilter(6)];
+        #end
 
         var destY    : Float = Lib.current.stage.stageHeight + this.h * 2;
         var distance : Float = destY - this.y;

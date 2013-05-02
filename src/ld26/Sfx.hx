@@ -29,7 +29,7 @@ class Sfx {
     */
     static public function play (snd:String, showBossSpeech:Bool = false) : Null<SoundChannel> {
         var snd = Assets.getSound(
-            #if flash
+            #if (flash || html5)
                 "assets/snd/" + snd + ".mp3"
             #else
                 "assets/snd/" + snd + ".wav"
