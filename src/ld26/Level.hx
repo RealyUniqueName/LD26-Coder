@@ -100,7 +100,7 @@ class Level extends Widget{
         this.featuresLeft   = this.cfg.features;
         Level.speed         = Main.cfg.speed * this.cfg.speed;
 
-        this.project.load( Project.rnd(this.cfg.complexity) );
+        this.project.load( Project.rnd(this.num >= 0 ? this.cfg.complexity : 9) );
     }//function load()
 
 
@@ -205,31 +205,34 @@ class Level extends Widget{
     *
     */
     private function _getNextFeature () : Feature {
-        //story mode
-        if( this.num >= 0 ){
-            return UIBuilder.create(Feature, {
-                blocks : Main.structs[Std.random(
-                    this.cfg.complexity < 8
-                        ? 8
-                        : (this.cfg.complexity <= Main.structs.length ? this.cfg.complexity : Main.structs.length)
-                )]
-            });
+        return UIBuilder.create(Feature, {
+            blocks : Main.structs[ Std.random(Main.structs.length) ]
+        });
+        // //story mode
+        // if( this.num >= 0 ){
+        //     return UIBuilder.create(Feature, {
+        //         blocks : Main.structs[Std.random(
+        //             this.cfg.complexity < 8
+        //                 ? 8
+        //                 : (this.cfg.complexity <= Main.structs.length ? this.cfg.complexity : Main.structs.length)
+        //         )]
+        //     });
 
-        //endless game
-        }else{
-            var complexity : Int = Std.int(Math.abs(this.num));
-            if( complexity > Main.structs.length ){
-                return Feature.rnd();
-            }else{
-                return UIBuilder.create(Feature, {
-                    blocks : Main.structs[Std.random(
-                        complexity < 8
-                            ? 8
-                            : (complexity <= Main.structs.length ? complexity : Main.structs.length)
-                    )]
-                });
-            }
-        }
+        // //endless game
+        // }else{
+        //     var complexity : Int = Std.int(Math.abs(this.num));
+        //     if( complexity > Main.structs.length ){
+        //         return Feature.rnd();
+        //     }else{
+        //         return UIBuilder.create(Feature, {
+        //             blocks : Main.structs[Std.random(
+        //                 complexity < 8
+        //                     ? 8
+        //                     : (complexity <= Main.structs.length ? complexity : Main.structs.length)
+        //             )]
+        //         });
+        //     }
+        // }
     }//function _getNextFeature()
 
 
@@ -339,7 +342,7 @@ class Level extends Widget{
         //for endless game
         if( this.num < 0 ){
             this.num --;
-            Level.speed -= 0.05;
+            Level.speed -= 0.025;
             if( Level.speed < 0.2 ) Level.speed = 0.2;
         }
     }//function refactoring()

@@ -7,13 +7,28 @@
         <Bmp src="'assets/img/boss.jpg'">
             <Bmp src="'assets/img/fck.png'" left="-90" top="50"/>
         </Bmp>
+
         <Text text="'Total score: ' + @score" />
-        <Button text="'Okay...'" on-click="
-            $this.getParentAs('popup', $Popup).close();
-            $Sfx.playTheme('theme');
-            Main.vs.show('menu', function(){
-                #level.free();
-            });
-        "/>
+
+        <!-- buttons -->
+        <HBox childPadding="10">
+            <Button text="'TRY HARDER!'" on-click="
+                $this.getParentAs('popup', $Popup).close();
+                //endless
+                if( #Level(level).num < 0 ){
+                    $Main.playEndless();
+                //story
+                }else{
+                    $Main.playLevel(#Level(level).num);
+                }
+            "/>
+            <Button text="'Okay...'" on-click="
+                $this.getParentAs('popup', $Popup).close();
+                $Sfx.playTheme('theme');
+                Main.vs.show('menu', function(){
+                    #level.free();
+                });
+            "/>
+        </HBox>
     </VBox>
 </Popup>

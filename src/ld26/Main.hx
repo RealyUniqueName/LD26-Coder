@@ -178,6 +178,31 @@ class Main{
     }//function playEndless()
 
 
+    /**
+    * Request LD badge for story mode completion
+    *
+    */
+    static public function requestBadge (name:String, score:Int) : Void {
+        #if flash
+            var request     = new nme.net.URLRequest("http://stablex.ru/ld26/badge/");
+            var variables   = new nme.net.URLVariables();
+            variables.name  = name;
+            variables.score = score;
+            request.method  = nme.net.URLRequestMethod.POST;
+            request.data    = variables;
+            new nme.net.URLLoader(request);
+        #end
+    }//function requestBadge()
+
+
+    /**
+    * Handle story mode completion
+    *
+    */
+    static public function storyCompleted () : Void {
+    }//function storyCompleted()
+
+
 /*******************************************************************************
 *       INSTANCE METHODS
 *******************************************************************************/

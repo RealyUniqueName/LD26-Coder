@@ -24,6 +24,22 @@
             on-resize        = "$this.label.height = $this.h;"
         />
     </Text>
+    <InputText>
+        <Default
+            label-filters    = "[new nme.filters.GlowFilter(0x333333, 1, 2, 2)]"
+            format-font      = "$Assets.getFont('assets/fonts/piedra.ttf').fontName"
+            format-color     = "0xcdc4d9"
+            format-size      = "16"
+            label-autoSize   = "nme.text.TextFieldAutoSize.NONE"
+            label-embedFonts = "true"
+            w           = "200"
+            label-width = "200"
+            skin:Paint-border      = "2"
+            skin:Paint-borderColor = "0xcdc4d9"
+            skin:Paint-color       = "0xFFFFFF"
+        />
+    </InputText>
+
     <Button>
         <Default
             padding = "5"

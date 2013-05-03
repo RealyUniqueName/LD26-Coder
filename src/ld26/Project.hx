@@ -109,10 +109,16 @@ class Project extends Widget{
     *
     */
     public function load (blocks:Array<Array<Int>>) : Void {
+        var topRow : Int = -1;
         for(c in 0...blocks.length){
             for(r in 0...blocks[c].length){
                 //create block
                 if( Main.cfg.block.types[ blocks[c][r] ] != null ){
+                    //find topmost occupied row
+                    if( topRow < 0 ){
+                        topRow = r;
+                    }
+                    //create block
                     this.blocks[c][r] = UIBuilder.create(Block, {
                         col  : c,
                         row  : r,
@@ -126,6 +132,12 @@ class Project extends Widget{
                     this.blocks[c][r] = null;
                 }
             }
+        }
+
+        //place selector to top row
+        if( topRow >= 0 ){
+            this.selectedRow  = topRow;
+            this.selector.top = topRow * Main.cfg.block.size;
         }
     }//function load()
 
