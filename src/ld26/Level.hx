@@ -290,6 +290,9 @@ class Level extends Widget{
         if( this.num < 0 ){
             Main.data.endless.score = this.score;
             Main.save();
+            Main.postScore("Endless", this.score);
+        }else{
+            Main.postScore("Story", this.score);
         }
     }//function gameOver()
 
@@ -316,6 +319,11 @@ class Level extends Widget{
         if( this.num >= 0 ){
             Main.data.story.score += this.score;
             Main.save();
+            Main.postScore("Story", this.score);
+            //medal for story mode
+            if( this.num + 1 >= Main.levels.length ){
+                Main.unlockMedal("Hardcore coder");
+            }
         }
     }//function victory()
 

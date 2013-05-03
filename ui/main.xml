@@ -14,7 +14,7 @@
             <Button text="'Endless'" defaults="'Default,mainMenu'" on-click="$Main.playEndless();Sfx.stopTheme();"/>
             <Text text="'HINT: fill the lines regardless of color'" format-size="18"/>
             <Widget>
-                <Text text="'by Alexander Kuzmenko for LD26'" format-size="14" top="50" />
+                <Text text="'by Alexander Kuzmenko for LD26'" format-size="14" top="50"/>
             </Widget>
         </VBox>
 

@@ -4,12 +4,20 @@
 <Popup name="'popup'" on-display="$Sfx.play('tada');">
     <VBox defaults="'popup'" autoWidth="true">
         <Text text="'I M P O S S I B L E !!!!'" format-size="30"/>
-        <Text text="'Type your LD login to get \'\'Hardcore coder\'\' badge:'"/>
+        <Text name="'label'" text="'Type your LD login to get \'\'Hardcore coder\'\' badge:'"/>
         <InputText text="'Batman'" name="'ldLogin'"/>
         <Button text="'I am HARDCORE!'" on-click="
-            $Main.requestBadge( $this.getParent('popup').getChildAs('ldLogin', $InputText).text, @score );
-            $Main.storyCompleted();
-            $this.getParentAs('popup', $Popup).close();
+            var label = $this.getParent('popup').getChildAs('label', $Text);
+
+            if( label.text == 'Request was sent' ){
+                $this.getParentAs('popup', $Popup).close();
+            }else{
+                $Main.requestBadge( $this.getParent('popup').getChildAs('ldLogin', $InputText).text, @score );
+                $Main.storyCompleted();
+                label.text = 'Request was sent';
+                $this.text = 'CLOSE';
+                $this.getParent('popup').getChild('ldLogin').visible = false;
+            }
         "/>
     </VBox>
 </Popup>

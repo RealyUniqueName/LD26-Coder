@@ -7,6 +7,14 @@ import ru.stablex.ui.UIBuilder;
 import ru.stablex.ui.widgets.ViewStack;
 import ru.stablex.ui.widgets.Widget;
 
+#if flash
+import com.newgrounds.API;
+import com.newgrounds.APIEvent;
+#end
+
+#if haxe3
+typedef Hash<T> = Map<String,T>;
+#end
 
 /**
 * Main class
@@ -57,6 +65,25 @@ class Main{
         Main.vs   = Main.root.getChildAs("vs", ViewStack);
 
         Lib.current.addChild(Main.root);
+
+        #if flash
+            API.debugMode = API.RELEASE_MODE;
+            // API.addEventListener(APIEvent.API_CONNECTED, function(e:APIEvent){
+            //     trace({
+            //         success : e.success,
+            //         error  : e.error
+            //     });
+            // });
+            API.connect(Lib.current, "31946:ySUcVo4J", "nF4rBxYXVtomCfLnE1UEN7dtK3PGsDTX");
+            API.addEventListener(APIEvent.SCORE_POSTED, function(e:APIEvent){
+                if( !e.success ){
+                    trace({
+                        success : e.success,
+                        error  : e.error
+                    });
+                }
+            });
+        #end
     }//function main()
 
 
@@ -108,6 +135,9 @@ class Main{
     *
     */
     static public function playStory (continueGame:Bool = false) : Void {
+        #if flash
+            //com.newgrounds.API.unlockMedal("Hardcore coder");
+        #end
         //if saved game was found
         if( !continueGame && Main.data.story.level > 0 ){
             UIBuilder.buildFn("ui/popup/restartStory.xml")().show();
@@ -201,6 +231,36 @@ class Main{
     */
     static public function storyCompleted () : Void {
     }//function storyCompleted()
+
+
+    /**
+    * Post score to newgrounds
+    *
+    */
+    static public function postScore (board:String, score:Int) : Void {
+        #if flash
+            try{
+                API.postScore(board, score);
+            }catch(e:Dynamic){
+                trace(e);
+            }
+        #end
+    }//function postScore()
+
+
+    /**
+    * Unlock medal on newgrounds
+    *
+    */
+    static public function unlockMedal (medal:String) : Void {
+        #if flash
+            try{
+                API.unlockMedal(medal);
+            }catch(e:Dynamic){
+                trace(e);
+            }
+        #end
+    }//function unlockMedal()
 
 
 /*******************************************************************************

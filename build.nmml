@@ -10,6 +10,8 @@
     <assets path="assets/fonts" include="*.ttf" />
     <assets path="assets/snd" include="*.mp3" unless="cpp" />
 
+    <haxeflag name="-swf-lib" value="lib/newgrounds.swf" if="flash"/>
+
     <classpath name="src" />
 
     <haxelib name="nme" />

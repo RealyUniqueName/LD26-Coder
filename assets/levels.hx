@@ -85,6 +85,6 @@
         complexity : 8,
         speed      : 0.2,
         deadline   : 35,
-        features   : 1
+        features   : 20
     }
 ]
