@@ -13,10 +13,6 @@ import ru.stablex.ui.widgets.Widget;
 #end
 
 
-#if haxe3
-private typedef Hash<T> = Map<String,T>;
-#end
-
 
 /**
 * Core class. All macro magic lives here
@@ -40,8 +36,8 @@ class UIBuilder {
         static private var _erAttrCls : EReg = ~/(([-a-z0-9_]+):([a-z0-9_]+))/i;
     //}
 
-    static private var _events  : Hash<Array<String>> = new Hash();
-    static private var _imports : Hash<String> = new Hash();
+    static private var _events  : Map<String, Array<String>> = new Map();
+    static private var _imports : Map<String,String> = new Map();
 
     static private var _initialized : Bool = false;
     //all generated code will be saved in this direcory (see .init() method for details)
@@ -57,19 +53,19 @@ class UIBuilder {
     * @param String - variable name of widget, wich has a parent tag for currently processed meta tag
     * @return - valid haxe code to inject in generated code
     */
-    static public var meta : Hash<Xml->String->String> = new Hash();
+    static public var meta : Map<String,Xml->String->String> = new Map();
 #end
 
 
 #if !macro
     //Closures for applaying default settings to widgets. Closures created with UIBuilder.init('defaults.xml')
-    static public var defaults : Hash<Hash<Widget->Void>> = new Hash();
+    static public var defaults : Map<String, Map<String,Widget->Void>> = new Map();
 
     //Widgets created with UIBuilder.buildFn() or UIBuilder.create()
-    static private var _objects : Hash<Widget> = new Hash();
+    static private var _objects : Map<String,Widget> = new Map();
 
     //registered skins
-    static public var skins : Hash<Void->Skin> = new Hash();
+    static public var skins : Map<String,Void->Skin> = new Map();
 
     //For id generator
     static private var _nextId : Int = 0;
@@ -83,7 +79,7 @@ class UIBuilder {
     * If you get any compiler errors on your xml files, you can find corresponding
     * file with generated code to find out what was wrong.
     */
-    #if haxe3 macro #else @:macro #end static public function saveCodeTo (dir:String) : Expr {
+    macro static public function saveCodeTo (dir:String) : Expr {
         var endSlash : EReg = ~/(\/|\\)$/;
         if( !endSlash.match(dir) ){
             dir += '/';
@@ -102,7 +98,7 @@ class UIBuilder {
     * @param defaultsXmlFile - path to xml file with default settings for widgets
     * @param enableRTXml - if you need to process xml at runtime, set this parameter to true
     */
-    #if haxe3 macro #else @:macro #end static public function init(defaultsXmlFile:String = null, enableRTXml:Bool = false) : Expr {
+    macro static public function init(defaultsXmlFile:String = null, enableRTXml:Bool = false) : Expr {
         var code : String = '\nnme.Lib.current.stage.removeEventListener(nme.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
         code += '\nnme.Lib.current.stage.addEventListener(nme.events.Event.ENTER_FRAME, ru.stablex.ui.UIBuilder.skinQueue);';
 
@@ -186,7 +182,7 @@ class UIBuilder {
         if( defaultsXmlFile != null ){
             var root : Xml = Xml.parse( File.getContent(defaultsXmlFile) ).firstElement();
             for(widget in root.elements()){
-                code += '\nif( !ru.stablex.ui.UIBuilder.defaults.exists("' + widget.nodeName + '") ) ru.stablex.ui.UIBuilder.defaults.set("' + widget.nodeName + '", new Hash());';
+                code += '\nif( !ru.stablex.ui.UIBuilder.defaults.exists("' + widget.nodeName + '") ) ru.stablex.ui.UIBuilder.defaults.set("' + widget.nodeName + '", new Map());';
                 for(node in widget.elements()){
                     code += '\nru.stablex.ui.UIBuilder.defaults.get("' + widget.nodeName + '").set("' + node.nodeName + '", function(__ui__widget0:ru.stablex.ui.widgets.Widget) : Void {';
                     code += UIBuilder.construct(node, 1, widget.nodeName);
@@ -386,7 +382,7 @@ class UIBuilder {
 
         //process class-casting attributes
         if( post.length > 0 ){
-            var props : Hash<Bool> = new Hash();
+            var props : Map<String,Bool> = new Map();
             var prop  : String;
             var pos   : Int = -1;
             post.sort(UIBuilder._attrClassCastSorter);
@@ -549,7 +545,7 @@ class UIBuilder {
     *
     * @return <type>Dynamic</type>->Root_Xml_Element_Class<Widget>
     */
-    #if haxe3 macro #else @:macro #end static public function buildFn (xmlFile:String) : Expr{
+    macro static public function buildFn (xmlFile:String) : Expr{
         if( !UIBuilder._initialized ) Err.trigger('Call UIBuilder.init()');
 
         var element = Xml.parse( File.getContent(xmlFile) ).firstElement();
@@ -573,7 +569,7 @@ class UIBuilder {
     *
     * @throw <type>String</type> if this shortcut is already used
     */
-    #if haxe3 macro #else @:macro #end static public function regEvent (shortcut:String, eventType:String, eventClass:String = 'nme.events.Event') : Expr{
+    macro static public function regEvent (shortcut:String, eventType:String, eventClass:String = 'nme.events.Event') : Expr{
         if( UIBuilder._events.exists(shortcut) ) Err.trigger('Event is already registered: ' + shortcut);
         UIBuilder._events.set(shortcut, [eventType, eventClass]);
         return Context.parse('true', Context.currentPos());
@@ -589,7 +585,7 @@ class UIBuilder {
     * can not be registered simultaneously, because both will be shortened to $MyClass for usage in xml.
     * You still can register one of them and use another one by it's full classpath in xml
     */
-    #if haxe3 macro #else @:macro #end static public function regClass (fullyQualifiedName:String) : Expr{
+    macro static public function regClass (fullyQualifiedName:String) : Expr{
         var cls : String;
 
         var sc : EReg = ~/\.([a-z0-9_]+)$/i;
@@ -620,7 +616,7 @@ class UIBuilder {
     * @throw <type>String</type> if one of tag names in xml does not match ~/^([a-z0-9_]+):([a-z0-9_]+)$/i
     * @throw <type>String</type> if class specified for skin system is not registered with .regClass
     */
-    #if haxe3 macro #else @:macro #end static public function regSkins(xmlFile:String) : Expr {
+    macro static public function regSkins(xmlFile:String) : Expr {
         if( !UIBuilder._initialized ) Err.trigger('Call UIBuilder.init() first');
 
         var element = Xml.parse( File.getContent(xmlFile) ).firstElement();
@@ -757,7 +753,7 @@ class UIBuilder {
     */
     static inline public function applyDefaults(obj:Widget) : Void {
         var clsName : String = Type.getClassName(Type.getClass(obj));
-        var widgetDefaults : Hash<Widget->Void> = UIBuilder.defaults.get( clsName.substr(clsName.lastIndexOf('.', clsName.length - 1) + 1) );
+        var widgetDefaults : Map<String,Widget->Void> = UIBuilder.defaults.get( clsName.substr(clsName.lastIndexOf('.', clsName.length - 1) + 1) );
         if( widgetDefaults != null ){
             var defs : Array<String> = obj.defaults.split(',');
             for(i in 0...defs.length){
